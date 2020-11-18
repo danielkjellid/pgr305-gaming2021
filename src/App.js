@@ -8,13 +8,21 @@ const App = () => {
     characterState.fetch()
   }, [])
 
-  useEffect(() => {
-    if (characterState.data) {
-      console.log(characterState.data)
-    }
-  }, [characterState.data])
+  // enten sånn her
+  if (characterState.isFetching === true) {
+    return <div>Loading...</div>
+  }
 
   return (
+    <div>
+      <h1> {characterState.data?.title} </h1>
+      <p> {characterState.data?.id} </p>
+      <b> {characterState.data?.completed.toString()} </b>
+    </div>
+  )
+
+  // eller sånn her
+  /* return (
     <>
       {characterState.isFetching ? (
         <h1>Jeg henter data...</h1>
@@ -24,7 +32,7 @@ const App = () => {
         </div>
       )}
     </>
-  )
+  ) */
 }
 
 export default App
