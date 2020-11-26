@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useAsyncStateContext } from './context/AsyncStateContext'
+import Routes from './routes/Routes'
 
 const App = () => {
   const { characterState } = useAsyncStateContext()
@@ -8,7 +9,14 @@ const App = () => {
     characterState.fetch()
   }, [])
 
+  return (
+    <div>
+      <Routes />
+    </div>
+  )
+
   // enten sånn her
+  /*
   if (characterState.isFetching === true) {
     return <div>Loading...</div>
   }
@@ -20,6 +28,7 @@ const App = () => {
       <b> {characterState.data?.completed.toString()} </b>
     </div>
   )
+  */
 
   // eller sånn her
   /* return (
