@@ -1,3 +1,13 @@
+/* Global */
+
+body {
+  background-color: #f1f5f9;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Main styles */
+
 .main-bg-color {
   background-color: #fafaf9;
 }
@@ -17,15 +27,16 @@
   padding: 0;
   margin: 0;
   color: #fff;
-  width: 45%;
+  width: 50%;
 }
 
 .hero-h1 {
   color: #f7fafc;
   font-size: 64px;
-  line-height: 59px;
+  line-height: 60px;
   font-weight: 900;
   margin-bottom: 40px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .hero-p {
@@ -40,6 +51,10 @@
   border: none;
 }
 
+#dropdown-menu {
+  display: none;
+}
+
 /* Media queries */
 
 /* Large screens */
@@ -51,12 +66,25 @@
 
 /* Medium screens */
 @media only screen and (max-width: 768px) {
+  .hero-h1 {
+    font-size: 52px;
+    line-height: 50px;
+  }
+  .hero-p {
+    font-size: 16px;
+  }
 }
 
 /* Small screens */
 @media only screen and (max-width: 640px) {
   .hero-text {
     width: 100%;
+  }
+  #main-navigation {
+    display: none;
+  }
+  #dropdown-menu {
+    display: block;
   }
 }
 
