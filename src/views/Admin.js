@@ -1,19 +1,21 @@
 import React, { useState } from 'react'
-import Container from 'react-bootstrap/Container'
-import Table from 'react-bootstrap/Table'
-import Tabs from 'react-bootstrap/Tabs'
-import Tab from 'react-bootstrap/Tab'
-import Button from 'react-bootstrap/Button'
-import ButtonGroup from 'react-bootstrap/ButtonGroup'
-import Modal from 'react-bootstrap/Modal'
-import Image from 'react-bootstrap/Image'
-
+import { 
+  Container, 
+  Table, 
+  Tabs, 
+  Tab, 
+  Button, 
+  ButtonGroup, 
+  Modal, 
+  Image, 
+  Form, 
+  InputGroup } from 'react-bootstrap'
 
 const Admin = () => {
 
   // data for the time being
   const [dummyData] = useState([{ id: 1, image: 'https://www.elkjop.no/primaryimage/193479', title: 'Fifa 21', category: 'Sport', price: 599}, { id: 2, title: 'Bloodborne', image: 'https://www.elkjop.no/image/dv_web_D180001002318523/PS4HITS6/bloodborne-ps4.jpg?$prod_all4one$', category: 'Fantasy', price: 199}])
-  const [clickedItem, setClickedItem] = useState([])
+  const [clickedItem, setClickedItem] = useState({})
 
   // state controlling tabs
   const [key, setKey] = useState('games')
@@ -25,20 +27,23 @@ const Admin = () => {
   const handleConfirmDeleteModalShow = (id) => {
     // save clickedItem in variable
     const clickedItem = dummyData.filter(instance => instance.id === id)
-    
+
     // set states
-    setClickedItem(clickedItem)
+    setClickedItem(clickedItem[0])
     setShowConfirmDeleteModal(true)
   }
 
   const handleDeleteItem = (id) => {
-    const itemIndex = clickedItem.findIndex((element) => element.id === id)
+    const itemIndex = dummyData.findIndex(item => item.id === clickedItem.id)
+
+    // TODO: handle delete at api endpoint
     dummyData.splice(itemIndex, 1)
     setShowConfirmDeleteModal(false)
   }
 
   // edit instance states and handlers
   const [showEditModal, setShowEditModal] = useState(false)
+  const [EditModalValidated, setEditModalValidated] = useState(false);
 
   const handleEditModalClose = () => setShowEditModal(false)
   const handleEditModalShow = (id) => {
@@ -46,8 +51,25 @@ const Admin = () => {
     const clickedItem = dummyData.filter(instance => instance.id === id)
 
     // set states
-    setClickedItem(clickedItem)
+    setClickedItem(clickedItem[0])
     setShowEditModal(true)
+  }
+
+  const handleEditModalSubmit = (event) => {
+    const form = event.target
+
+    if (form.checkValidity() === false) {
+      event.preventDefault()
+      event.stopPropagation()
+    } else {
+      event.preventDefault()
+      event.stopPropagation()
+      setEditModalValidated(true)
+
+      console.log(clickedItem)
+
+      // TODO: handle patch to api
+    }
   }
 
 
@@ -65,6 +87,7 @@ const Admin = () => {
             activeKey={key}
             onSelect={(k) => setKey(k)}
             transition={false}
+            variant="tabs"
           >
             <Tab eventKey="games" title="Games">
               <Table responsive>
@@ -80,8 +103,7 @@ const Admin = () => {
                 <tbody>
                   {dummyData.map(data => 
                     <tr key={data.id}>
-                      <td><Image className="product-image-container" src={data.image} rounded /></td>
-                      <td>{data.id}</td>
+                      <td><Image className="product-image" src={data.image} rounded /></td>
                       <td>{data.title}</td>
                       <td>{data.category}</td>
                       <td>{data.price}</td>
@@ -109,46 +131,94 @@ const Admin = () => {
             </Tab>
           </Tabs>
         </Container>
-        {clickedItem.map((item) =>
-          <div key={item.id}>
-            <Modal
-              animation={false} 
-              show={showConfirmDeleteModal} 
-              onHide={handleConfirmDeleteModalClose}
-            >
-                <Modal.Header closeButton>
-                  <Modal.Title>Delete instance</Modal.Title>
-                </Modal.Header>
-                  <Modal.Body>Are you sure you want to delete {item.title}? This action cannot be undone.</Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={handleConfirmDeleteModalClose}>
-                    No
-                  </Button>
-                  <Button variant="danger" onClick={() => handleDeleteItem(item.id)}>
-                    Delete instance
-                  </Button>
-                </Modal.Footer>
-            </Modal>
-            <Modal
-              animation={false} 
-              show={showEditModal} 
-              onHide={handleEditModalClose}
-            >
-                <Modal.Header closeButton>
-                  <Modal.Title>Edit {item.title}</Modal.Title>
-                </Modal.Header>
-                  <Modal.Body>X</Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={handleEditModalClose}>
-                    Cancel
-                  </Button>
-                  <Button variant="success" onClick={() => handleDeleteItem(item.id)}>
-                    Save
-                  </Button>
-                </Modal.Footer>
-            </Modal>
-          </div> 
-        )}
+        <Modal
+          animation={false} 
+          show={showConfirmDeleteModal} 
+          onHide={handleConfirmDeleteModalClose}
+        >
+            <Modal.Header closeButton>
+              <Modal.Title>Delete instance</Modal.Title>
+            </Modal.Header>
+              <Modal.Body>Are you sure you want to delete {clickedItem.title}? This action cannot be undone.</Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleConfirmDeleteModalClose}>
+                No
+              </Button>
+              <Button variant="danger" onClick={() => handleDeleteItem(clickedItem.id)}>
+                Delete instance
+              </Button>
+            </Modal.Footer>
+        </Modal>
+        <Modal
+          animation={false} 
+          show={showEditModal} 
+          onHide={handleEditModalClose}
+        >
+            <Modal.Header closeButton>
+              <Modal.Title>Edit {clickedItem.title}</Modal.Title>
+            </Modal.Header>
+            <Form noValidate validated={EditModalValidated} onSubmit={handleEditModalSubmit}>
+              <Modal.Body>
+                  <Form.Group controlId="id_item_title">
+                    <Form.Label>Title</Form.Label>
+                    <Form.Control
+                      required 
+                      type="text" 
+                      defaultValue={clickedItem.title}
+                    />
+                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">You have to specify a title!</Form.Control.Feedback>
+                  </Form.Group>
+                  <Form.Group controlId="id_item_file">
+                    <Form.Label>Image</Form.Label>
+                    <Form.File
+                      label={clickedItem.image} 
+                      custom 
+                    />
+                    <Image 
+                      className="product-image mt-2" 
+                      src={clickedItem.image} 
+                      rounded 
+                    />
+                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">You have to upload an image!</Form.Control.Feedback>
+                  </Form.Group>
+                  <Form.Group controlId="id_item_category">
+                    <Form.Label>Category</Form.Label>
+                    <Form.Control
+                      required
+                      as="select"
+                      custom
+                    >
+                      <option value="0">Fantasy</option>
+                      <option value="1">Sport</option>
+                    </Form.Control>
+                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                  </Form.Group>
+                  <Form.Group controlId="id_item_price">
+                    <Form.Label>Price</Form.Label>
+                    <InputGroup>
+                      <Form.Control
+                        required
+                        type="text" 
+                        defaultValue={clickedItem.price}
+                      />
+                      <InputGroup.Append>
+                          <InputGroup.Text id="inputGroupPrepend">kr</InputGroup.Text>
+                      </InputGroup.Append>
+                      <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">You have to specify a price!</Form.Control.Feedback>
+                    </InputGroup>
+                  </Form.Group>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleEditModalClose}>
+                  Cancel
+                </Button>
+                <Button variant="success" type="submit">Save</Button>
+              </Modal.Footer>
+            </Form>
+        </Modal>
       </div>
     </div>
   )
