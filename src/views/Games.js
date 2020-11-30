@@ -1,10 +1,15 @@
 import React from 'react'
+import GameList from '../components/GameList'
+import { Row, Container } from 'react-bootstrap'
 
 const Games = () => {
   return (
-    <div>
+    <Container>
       <h1>Games</h1>
-    </div>
+      <Row xs={1} md={2} lg={3}>
+        <GameList />
+      </Row>
+    </Container>
   )
 }
 
