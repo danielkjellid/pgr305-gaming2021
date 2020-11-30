@@ -4,9 +4,11 @@ import Routes from './routes/Routes'
 
 const App = () => {
   const { gameState } = useAsyncStateContext()
+  const { characterState } = useAsyncStateContext()
 
   useEffect(() => {
     gameState.fetch()
+    characterState.fetch()
   }, [])
 
   return (

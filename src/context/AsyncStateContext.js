@@ -16,7 +16,7 @@ export const useAsyncStateContext = () => {
 
 const AsyncStateProvider = ({ children }) => {
   const characterState = useAsyncState(
-    'https://jsonplaceholder.typicode.com/todos/1'
+    'https://jsonplaceholder.typicode.com/todos'
   )
 
   const gameState = useAsyncState('https://jsonplaceholder.typicode.com/todos')

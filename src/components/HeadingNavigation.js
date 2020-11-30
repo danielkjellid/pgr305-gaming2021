@@ -5,7 +5,7 @@ const HeadingNavigation = (props) => {
   return (
     <div className='section-heading'>
       <h2 className='section-text'> {props.headingText} </h2>
-      <Link to='/games' className='chevron-btn'>
+      <Link to={props.link} className='chevron-btn'>
         <span className='btn-text'>{props.btnText}</span>
         <svg
           xmlns='http://www.w3.org/2000/svg'
