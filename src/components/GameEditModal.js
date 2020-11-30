@@ -12,8 +12,9 @@ const GameEditModal = (props) => {
   const [formValidated, setFormValidated] = useState(false)
   const [title, setTitle] = useState('')
   const [image, setImage] = useState('')
-  const [category, setCategory] = useState('')
+  const [genre, setGenre] = useState('')
   const [price, setPrice] = useState('')
+  const [console, setConsole] = useState('')
 
   // the handleEdit function fires whenever the form is submitted
   // e.g. the edit is made
@@ -41,13 +42,24 @@ const GameEditModal = (props) => {
       id: props.game.id,
       title: title !== '' ? title : props.game.title,
       image: image !== '' ? image : props.game.image,
-      category: category !== '' ? category : props.game.category,
-      price: price !== '' ? price : props.game.price
+      genre: genre !== '' ? genre : props.game.category,
+      price: price !== '' ? price : props.game.price,
+      console: console !== '' ? console : props.game.console
     }
 
     // submit local, updated, item to parent, which will push to api
     // and update local state
     props.submitEdit(item)
+
+    // reset fields
+    // setTitle('')
+    // setImage('')
+    // setGenre('')
+    // setPrice('')
+    // setConsole('')
+
+    // setFormValidated(false)
+    // BUG: validtaion does not work if an item has been edited, and you go to edit a new item
   }
 
   return (
@@ -88,15 +100,16 @@ const GameEditModal = (props) => {
                 <Form.Control.Feedback type="invalid">You have to upload an image!</Form.Control.Feedback>
               </Form.Group>
               <Form.Group controlId="id_item_category">
-                <Form.Label>Category</Form.Label>
+                <Form.Label>Genre</Form.Label>
                 <Form.Control
                   required
                   as="select"
                   custom
-                  onChange={e => setCategory(e.target.value)}
+                  defaultValue={props.game.genre}
+                  onChange={e => setGenre(e.target.value)}
                 >
-                  <option value="0">Fantasy</option>
-                  <option value="1">Sport</option>
+                  <option value="Fantasy">Fantasy</option>
+                  <option value="Sport">Sport</option>
                 </Form.Control>
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               </Form.Group>
@@ -115,6 +128,20 @@ const GameEditModal = (props) => {
                   <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                   <Form.Control.Feedback type="invalid">You have to specify a price!</Form.Control.Feedback>
                 </InputGroup>
+              </Form.Group>
+              <Form.Group controlId="id_item_category">
+                <Form.Label>Console</Form.Label>
+                <Form.Control
+                  required
+                  as="select"
+                  custom
+                  defaultValue={props.game.console}
+                  onChange={e => setConsole(e.target.value)}
+                >
+                  <option value="0">ps5</option>
+                  <option value="1">xbox</option>
+                </Form.Control>
+                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               </Form.Group>
           </Modal.Body>
           <Modal.Footer>

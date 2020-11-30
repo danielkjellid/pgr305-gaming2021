@@ -9,24 +9,27 @@ import {
   Image } from 'react-bootstrap'
 import InstanceDeleteModal from '../components/InstanceDeleteModal'
 import GameEditModal from '../components/GameEditModal'
+import InstanceAddModal from '../components/InstanceAddModal'
 
 const Admin = () => {
   // data for the time being
-  const [dummyData] = useState([
+  const [dummyGames] = useState([
     {
       id: 1,
       image: 'https://www.elkjop.no/primaryimage/193479',
       title: 'Fifa 21',
-      category: 'Sport',
+      genre: 'Sport',
       price: 599,
+      console: 'ps5',
     },
     {
       id: 2,
       title: 'Bloodborne',
       image:
         'https://www.elkjop.no/image/dv_web_D180001002318523/PS4HITS6/bloodborne-ps4.jpg?$prod_all4one$',
-      category: 'Fantasy',
+      genre: 'Fantasy',
       price: 199,
+      console: 'ps5',
     },
   ])
   const [clickedItem, setClickedItem] = useState({})
@@ -39,7 +42,7 @@ const Admin = () => {
   const handleEditGameModalClose = () => setShowEditGameModal(false)
   const handleEditGameModalShow = (id) => {
     // save clickedItem in variable
-    const clickedItem = dummyData.filter((instance) => instance.id === id)
+    const clickedItem = dummyGames.filter((instance) => instance.id === id)
 
     // set states
     setClickedItem(clickedItem[0])
@@ -50,6 +53,8 @@ const Admin = () => {
     // TODO: handle patch to api and update local state
     // item edited can be accessed by the item var
     // example: console.log(item)
+
+    setShowEditGameModal(false)
   }
 
   // delete instance states and handlers
@@ -57,7 +62,7 @@ const Admin = () => {
   const handleDeleteModalClose = () => setShowDeleteModal(false)
   const handleDeleteModalShow = (id) => {
     //save clickedItem in variable
-    const clickedItem = dummyData.filter(instance => instance.id === id)
+    const clickedItem = dummyGames.filter(instance => instance.id === id)
 
     // set states
     setClickedItem(clickedItem[0])
@@ -65,11 +70,27 @@ const Admin = () => {
   }
 
   const handleDeleteInstance = () => {
-    const itemIndex = dummyData.findIndex(item => item.id === clickedItem.id)
+    const itemIndex = dummyGames.findIndex(item => item.id === clickedItem.id)
 
     // TODO: handle delete at api endpoint
-    dummyData.splice(itemIndex, 1)
+    dummyGames.splice(itemIndex, 1)
     setShowDeleteModal(false)
+  }
+
+  // add instance and handlers
+  const [showAddModal, setShowAddModal] = useState(false)
+  const handleAddModalShow = () => setShowAddModal(true)
+  const handleAddModalClose = () => setShowAddModal(false)
+
+  const handleAddInstance = (tabKey, item) => {
+    if (tabKey === 'games') {
+      dummyGames.push(item)
+      console.log('pushed')
+    } else if (tabKey === 'characters') {
+      
+    } else if (tabKey === 'categories') {
+
+    }
   }
  
   return (
@@ -83,7 +104,7 @@ const Admin = () => {
         <Container>
           <div className="flex items-center justify-between">
             <h2>Overview</h2>
-            <Button>Add new {key === 'games' ? 'game' : 'character'}</Button>
+            <Button onClick={() => handleAddModalShow()}>Add new {key === 'games' ? 'game' : 'character'}</Button>
           </div>
           <Tabs
             id='games-overview'
@@ -99,13 +120,14 @@ const Admin = () => {
                   <tr>
                     <th>Image</th>
                     <th>Title</th>
-                    <th>Category</th>
+                    <th>Genre</th>
                     <th>Price</th>
+                    <th>Console</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {dummyData.map((data) => (
+                  {dummyGames.map((data) => (
                     <tr key={data.id}>
                       <td>
                         <Image
@@ -115,8 +137,9 @@ const Admin = () => {
                         />
                       </td>
                       <td>{data.title}</td>
-                      <td>{data.category}</td>
+                      <td>{data.genre}</td>
                       <td>{data.price}</td>
+                      <td>{data.console}</td>
                       <td>
                         <ButtonGroup>
                           <Button variant="secondary" onClick={() => handleEditGameModalShow(data.id)}>
@@ -150,6 +173,13 @@ const Admin = () => {
           onHide={handleDeleteModalClose}
           confirmDelete={handleDeleteInstance}
           title={clickedItem.title}
+        />
+
+        <InstanceAddModal 
+          show={showAddModal}
+          onHide={handleAddModalClose}
+          tab={key}
+          submitAdd={handleAddInstance}
         />
 
         <GameEditModal
