@@ -6,10 +6,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles.css'
 
 ReactDOM.render(
-  <React.StrictMode>
     <AsyncStateProvider>
       <App />
-    </AsyncStateProvider>
-  </React.StrictMode>,
+    </AsyncStateProvider>,
   document.getElementById('root')
 )

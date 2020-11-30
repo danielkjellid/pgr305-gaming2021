@@ -6,7 +6,11 @@ import {
   Tab, 
   Button, 
   ButtonGroup, 
-  Image } from 'react-bootstrap'
+  Image, 
+  OverlayTrigger,
+  Tooltip,
+  Row,
+  Col } from 'react-bootstrap'
 import InstanceDeleteModal from '../components/InstanceDeleteModal'
 import GameEditModal from '../components/GameEditModal'
 import InstanceAddModal from '../components/InstanceAddModal'
@@ -32,6 +36,23 @@ const Admin = () => {
       console: 'ps5',
     },
   ])
+  const [dummyCharacters] = useState([
+    {
+      id: 1,
+      name: 'Mario',
+      gender: 'M',
+      homeWorld: 'Mushroom Kingdom',
+      gameId: 3
+    },
+    {
+      id: 2,
+      name: 'Luigi',
+      gender: 'M',
+      homeWorld: 'Mushroom Kingdom',
+      gameId: 3
+    },
+  ])
+
   const [clickedItem, setClickedItem] = useState({})
 
   // state controlling tabs
@@ -62,34 +83,55 @@ const Admin = () => {
   const handleDeleteModalClose = () => setShowDeleteModal(false)
   const handleDeleteModalShow = (id) => {
     //save clickedItem in variable
-    const clickedItem = dummyGames.filter(instance => instance.id === id)
+
+    let clickedItem = null
+
+    if (key === 'games') {
+      clickedItem = dummyGames.filter(instance => instance.id === id)
+    } else if (key === 'characters') {
+      clickedItem = dummyCharacters.filter(instance => instance.id === id)
+    } else if (key === 'categories') {
+      // TBA
+    }
 
     // set states
     setClickedItem(clickedItem[0])
     setShowDeleteModal(true)
   }
 
+  const findAndSplice = (arr) => {
+    const itemIndex = arr.findIndex(item => item.id === clickedItem.id)
+    return arr.splice(itemIndex, 1)
+  }
+
   const handleDeleteInstance = () => {
-    const itemIndex = dummyGames.findIndex(item => item.id === clickedItem.id)
+
+    if (key === 'games') {
+      findAndSplice(dummyGames)
+    } else if (key === 'characters') {
+      findAndSplice(dummyCharacters)
+      console.log('deleted')
+    } else if (key === 'categories') {
+      // TBA
+    }
 
     // TODO: handle delete at api endpoint
-    dummyGames.splice(itemIndex, 1)
     setShowDeleteModal(false)
   }
 
-  // add instance and handlers
+  // add instance state and handlers
   const [showAddModal, setShowAddModal] = useState(false)
   const handleAddModalShow = () => setShowAddModal(true)
   const handleAddModalClose = () => setShowAddModal(false)
 
   const handleAddInstance = (tabKey, item) => {
     if (tabKey === 'games') {
+      // handle new games 
       dummyGames.push(item)
-      console.log('pushed')
     } else if (tabKey === 'characters') {
-      
+      // handle new characters
     } else if (tabKey === 'categories') {
-
+      // handle new categories
     }
   }
  
@@ -102,10 +144,12 @@ const Admin = () => {
       </div>
       <div className='admin-overview-container'>
         <Container>
-          <div className="flex items-center justify-between">
-            <h2>Overview</h2>
-            <Button onClick={() => handleAddModalShow()}>Add new {key === 'games' ? 'game' : 'character'}</Button>
-          </div>
+          <Row>
+            <Col><h2>Overview</h2></Col>
+            <Col className="flex justify-end">
+              <Button onClick={() => handleAddModalShow()}>Add new</Button>
+            </Col>
+          </Row>
           <Tabs
             id='games-overview'
             activeKey={key}
@@ -130,11 +174,25 @@ const Admin = () => {
                   {dummyGames.map((data) => (
                     <tr key={data.id}>
                       <td>
-                        <Image
-                          className='product-image'
-                          src={data.image}
-                          rounded
-                        />
+                        <OverlayTrigger
+                          key={data.id}
+                          placement="top"
+                          overlay={
+                            <Tooltip id={`tooltip-image-${data.id}`}>
+                              <Image
+                                className="product-image-tooltip"
+                                src={data.image}
+                                rounded
+                              />
+                            </Tooltip>
+                          }
+                        >
+                          <Image
+                            className='product-image'
+                            src={data.image}
+                            rounded
+                          />
+                        </OverlayTrigger>
                       </td>
                       <td>{data.title}</td>
                       <td>{data.genre}</td>
@@ -160,7 +218,41 @@ const Admin = () => {
               </Table>
             </Tab>
             <Tab eventKey='characters' title='Characters'>
-              <p>2</p>
+              <Table className="mt-4" responsive striped bordered>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Home world</th>
+                    <th>Games</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {dummyCharacters.map((data) => (
+                    <tr key={data.id}>
+                      <td>{data.name}</td>
+                      <td>{data.gender}</td>
+                      <td>{data.homeWorld}</td>
+                      <td>{data.gameId}</td>
+                      <td>
+                        <ButtonGroup>
+                          <Button variant="secondary" onClick={() => handleEditGameModalShow(data.id)}>
+                            <svg className="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                            </svg>
+                          </Button>
+                          <Button variant="danger" onClick={() => handleDeleteModalShow(data.id)}>
+                            <svg className="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                          </Button>
+                        </ButtonGroup>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
             </Tab>
             <Tab eventKey="categories" title="Categories">
               <p>3</p>
@@ -172,7 +264,7 @@ const Admin = () => {
           show={showDeleteModal} 
           onHide={handleDeleteModalClose}
           confirmDelete={handleDeleteInstance}
-          title={clickedItem.title}
+          title={clickedItem.name !== undefined ? clickedItem.name : clickedItem.title}
         />
 
         <InstanceAddModal 
