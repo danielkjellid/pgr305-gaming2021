@@ -55,10 +55,13 @@ body {
   border-top: 1px solid #E2E8F0;
   border-bottom: 1px solid #E2E8F0;
   padding: 4rem 0 4rem 0;
+  background-color: #fff;
 }
 
 .admin-overview-container {
   padding: 2rem 0 2rem 0;
+  background-color: #fff;
+  height: 100vh;
 }
 
 .product-image {
@@ -70,6 +73,18 @@ body {
   color: #FFF;
   height: 20px;
   width: 20px;
+}
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
 }
 
 #dropdown-menu {
