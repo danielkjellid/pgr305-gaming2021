@@ -3,10 +3,10 @@ import { useAsyncStateContext } from './context/AsyncStateContext'
 import Routes from './routes/Routes'
 
 const App = () => {
-  const { characterState } = useAsyncStateContext()
+  const { gameState } = useAsyncStateContext()
 
   useEffect(() => {
-    characterState.fetch()
+    gameState.fetch()
   }, [])
 
   return (

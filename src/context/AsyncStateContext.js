@@ -19,14 +19,14 @@ const AsyncStateProvider = ({ children }) => {
     'https://jsonplaceholder.typicode.com/todos/1'
   )
 
-  //const gameState = useAsyncState()
-
-  //const reviewsState = customHook
+  const gameState = useAsyncState('https://jsonplaceholder.typicode.com/todos')
+  //const reviegawsState = customHook
 
   return (
     <AsyncStateContext.Provider
       value={{
         characterState,
+        gameState,
       }}
     >
       {children}
