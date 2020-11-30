@@ -53,6 +53,7 @@ const Admin = () => {
     },
   ])
 
+  // empty state to store item which is to be edited or deleted
   const [clickedItem, setClickedItem] = useState({})
 
   // state controlling tabs
@@ -90,8 +91,6 @@ const Admin = () => {
       clickedItem = dummyGames.filter(instance => instance.id === id)
     } else if (key === 'characters') {
       clickedItem = dummyCharacters.filter(instance => instance.id === id)
-    } else if (key === 'categories') {
-      // TBA
     }
 
     // set states
@@ -111,8 +110,6 @@ const Admin = () => {
     } else if (key === 'characters') {
       findAndSplice(dummyCharacters)
       console.log('deleted')
-    } else if (key === 'categories') {
-      // TBA
     }
 
     // TODO: handle delete at api endpoint
@@ -130,8 +127,7 @@ const Admin = () => {
       dummyGames.push(item)
     } else if (tabKey === 'characters') {
       // handle new characters
-    } else if (tabKey === 'categories') {
-      // handle new categories
+      dummyCharacters.push(item)
     }
   }
  
@@ -237,7 +233,7 @@ const Admin = () => {
                       <td>{data.gameId}</td>
                       <td>
                         <ButtonGroup>
-                          <Button variant="secondary" onClick={() => handleEditGameModalShow(data.id)}>
+                          <Button variant="secondary">
                             <svg className="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                             </svg>
@@ -254,9 +250,6 @@ const Admin = () => {
                 </tbody>
               </Table>
             </Tab>
-            <Tab eventKey="categories" title="Categories">
-              <p>3</p>
-            </Tab>
           </Tabs>
         </Container>
 
@@ -272,13 +265,14 @@ const Admin = () => {
           onHide={handleAddModalClose}
           tab={key}
           submitAdd={handleAddInstance}
+          games={dummyGames}
         />
 
         <GameEditModal
           show={showEditGameModal}
           onHide={handleEditGameModalClose}
           submitEdit={handleEditModalSubmit}
-          game={clickedItem}
+          game={clickedItem.title !== undefined ? clickedItem.title : ''}
         />
       </div>
     </div>
