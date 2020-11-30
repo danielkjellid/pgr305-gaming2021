@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 
 const GameDetails = ({ data }) => {
   const { gameId } = useParams()
@@ -8,10 +8,20 @@ const GameDetails = ({ data }) => {
 
   if (game) {
     gameData = (
-      <div>
-        <h3> {game.title} dskdkosdoksko </h3>
-        <p> {game.id} </p>
-      </div>
+      <>
+        <div>
+          <Link to='/games'>Back to games</Link>
+        </div>
+        <div className='game-details'>
+          <div>
+            <img src='https://source.unsplash.com/random/300x400' alt='' />
+          </div>
+          <div className='game-details-desc'>
+            <h2> {game.title} dskdkosdoksko </h2>
+            <p> {game.id} </p>
+          </div>
+        </div>
+      </>
     )
   } else {
     gameData = <h2> Game doesnt exist </h2>

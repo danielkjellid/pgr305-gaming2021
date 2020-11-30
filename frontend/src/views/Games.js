@@ -20,7 +20,6 @@ const Games = () => {
         </Route>
         <Route path={`${url}/:gameId`}>
           <GameDetails data={gameState.data} />
-          <p>lass</p>
         </Route>
       </Switch>
     </Container>

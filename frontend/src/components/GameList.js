@@ -10,7 +10,10 @@ const GameList = ({ preview, url }) => {
 
   return games
     ? games.map((game) => (
-        <Link to={`${url}/${game.id}`}>
+        <Link
+          to={`${url}/${game.id}`}
+          style={{ textDecoration: 'none', color: 'inherit' }}
+        >
           <GameItem key={game.id} game={game} />
         </Link>
       ))
