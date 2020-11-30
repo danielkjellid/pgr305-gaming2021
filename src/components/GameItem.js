@@ -3,8 +3,8 @@ import { Card, Col } from 'react-bootstrap'
 
 const GameItem = ({ game }) => {
   return (
-    <Col>
-      <Card>
+    <Col style={{ marginBottom: '40px' }}>
+      <Card className='card'>
         <Card.Img
           variant='top'
           src='https://source.unsplash.com/random/150x100'

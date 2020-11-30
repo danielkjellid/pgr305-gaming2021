@@ -4,6 +4,7 @@ body {
   background-color: #f1f5f9;
   box-sizing: border-box;
   font-family: 'Open Sans', sans-serif;
+  margin: 0 auto;
 }
 
 /* Main styles */
@@ -45,6 +46,11 @@ body {
   margin-bottom: 40px;
   font-weight: normal;
   font-size: 20px;
+}
+
+.main-heading {
+  margin-bottom: 40px;
+  margin-top: 40px;
 }
 
 .main-btn {
@@ -91,6 +97,7 @@ body {
 .section-text {
   font-weight: 600;
   font-family: Montserrat, 'sans-serif';
+  font-size: 24px;
 }
 
 .chevron-btn {
@@ -103,6 +110,10 @@ body {
 
 .btn-text {
   margin-right: 8px;
+}
+
+.card {
+  width: 100%;
 }
 
 /* Media queries */
