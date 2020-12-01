@@ -11,6 +11,7 @@ import {
   Tooltip,
   Row,
   Col } from 'react-bootstrap'
+
 import InstanceDeleteModal from '../components/InstanceDeleteModal'
 import InstanceAddModal from '../components/InstanceAddModal'
 import InstanceEditModal from '../components/InstanceEditModal'
@@ -24,7 +25,7 @@ const Admin = () => {
       title: 'Fifa 21',
       genre: 'Sport',
       price: 599,
-      console: 'ps5',
+      console: 'PlayStation 5',
     },
     {
       id: 2,
@@ -33,21 +34,23 @@ const Admin = () => {
         'https://www.elkjop.no/image/dv_web_D180001002318523/PS4HITS6/bloodborne-ps4.jpg?$prod_all4one$',
       genre: 'Fantasy',
       price: 199,
-      console: 'ps5',
+      console: 'PlayStation 5',
     },
   ])
   const [dummyCharacters] = useState([
     {
       id: 1,
       name: 'Mario',
-      gender: 'M',
+      image: 'https://upload.wikimedia.org/wikipedia/en/a/a9/MarioNSMBUDeluxe.png',
+      gender: 'Male',
       homeWorld: 'Mushroom Kingdom',
       gamesId: [1]
     },
     {
       id: 2,
       name: 'Luigi',
-      gender: 'M',
+      image: 'https://upload.wikimedia.org/wikipedia/en/7/73/Luigi_NSMBUDX.png',
+      gender: 'Male',
       homeWorld: 'Mushroom Kingdom',
       gamesId: [1, 2]
     },
@@ -212,7 +215,7 @@ const Admin = () => {
                       <td>{data.console}</td>
                       <td>
                         <ButtonGroup>
-                          <Button variant="secondary">
+                          <Button variant="secondary" onClick={() => handleEditModalShow(data.id)}>
                             <svg className="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                             </svg>
@@ -233,6 +236,7 @@ const Admin = () => {
               <Table className="mt-4" responsive striped bordered>
                 <thead>
                   <tr>
+                    <th>Image</th>
                     <th>Name</th>
                     <th>Gender</th>
                     <th>Home world</th>
@@ -243,6 +247,27 @@ const Admin = () => {
                 <tbody>
                   {dummyCharacters.map((data) => (
                     <tr key={data.id}>
+                      <td>
+                        <OverlayTrigger
+                          key={data.id}
+                          placement="top"
+                          overlay={
+                            <Tooltip id={`tooltip-character-image-${data.id}`}>
+                              <Image
+                                className="product-image-tooltip"
+                                src={data.image}
+                                rounded
+                              />
+                            </Tooltip>
+                          }
+                        >
+                          <Image
+                            className='product-image'
+                            src={data.image}
+                            rounded
+                          />
+                        </OverlayTrigger>
+                      </td>
                       <td>{data.name}</td>
                       <td>{data.gender}</td>
                       <td>{data.homeWorld}</td>
@@ -257,7 +282,7 @@ const Admin = () => {
                       </td>
                       <td>
                         <ButtonGroup>
-                          <Button variant="secondary">
+                          <Button variant="secondary" onClick={() => handleEditModalShow(data.id)}>
                             <svg className="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                             </svg>
@@ -275,7 +300,6 @@ const Admin = () => {
               </Table>
             </Tab>
           </Tabs>
-          <Button onClick={() => handleEditModalShow(1)}>Show</Button>
         </Container>
 
         <InstanceDeleteModal

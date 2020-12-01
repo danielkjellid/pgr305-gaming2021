@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { Form } from 'react-bootstrap'
+import { Form, Image } from 'react-bootstrap'
 
 const CharacterForm = (props) => {
   const [checkFormValidated, setCheckFormValidated] = useState(false)
   const [characterName, setCharacterName] = useState('')
+  const [characterImage, setCharacterImage] = useState('')
   const [characterGender, setCharacterGender] = useState('')
   const [characterHomeWorld, setCharacterHomeWorld] = useState('')
   const [characterGames, setCharacterGames] = useState('')
@@ -42,6 +43,7 @@ const CharacterForm = (props) => {
         item = {
           id: props.item.id,
           name: characterName !== '' ? characterName : props.item.name,
+          image: characterImage !== '' ? characterImage : props.item.image,
           gender: characterGender !== '' ? characterGender : props.item.gender,
           homeWorld: characterHomeWorld !== '' ? characterHomeWorld : props.item.homeWorld,
           gamesId: characterGames !== '' ? characterGames : props.item.gamesId,
@@ -50,6 +52,7 @@ const CharacterForm = (props) => {
         item = {
           id: 999, // temporary ID, to be removed
           name: characterName,
+          image: characterImage,
           gender: characterGender,
           homeWorld: characterHomeWorld,
           gamesId: characterGames
@@ -79,6 +82,25 @@ const CharacterForm = (props) => {
         />
         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         <Form.Control.Feedback type="invalid">You have to specify a title!</Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group controlId="id_character_file" >
+        <Form.Label>Image</Form.Label>
+        <Form.File
+          required={props.item !== undefined ? false : true}
+          label={props.item !== undefined ? props.item.image : 'Upload character image'} 
+          custom
+          onChange={e => setCharacterImage(e.target.value)}
+        />
+        {props.item !== undefined 
+          ? <Image 
+              className="product-image-tooltip mt-2" 
+              src={props.item.image} 
+              rounded
+            /> 
+          : null
+        }
+        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid">You have to upload an image!</Form.Control.Feedback>
       </Form.Group>
       <Form.Group controlId="id_character_gender">
         <Form.Label>Gender</Form.Label>
