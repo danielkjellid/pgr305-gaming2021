@@ -7,9 +7,9 @@ const GameForm = (props) => {
   const [checkFormValidated, setCheckFormValidated] = useState(false)
   const [gameTitle, setGameTitle] = useState('')
   const [gameImage, setGameImage] = useState('')
-  const [gameGenre, setGameGenre] = useState('')
+  const [gameGenre, setGameGenre] = useState('Fantasy')
   const [gamePrice, setGamePrice] = useState('')
-  const [gameConsole, setGameConsole] = useState('')
+  const [gameConsole, setGameConsole] = useState('PlayStation 5')
 
   // handler for adding a game instance
   const handleSubmit = (event) => {
@@ -101,7 +101,7 @@ const GameForm = (props) => {
           required
           as="select"
           custom
-          defaultValue={props.item !== undefined ? props.item.genre : 'Fantasy'}
+          defaultValue={props.item !== undefined ? props.item.genre : gameGenre}
           onChange={e => setGameGenre(e.target.value)}
         >
           <option value="Fantasy">Fantasy</option>
@@ -132,7 +132,7 @@ const GameForm = (props) => {
           required
           as="select"
           custom
-          defaultValue={props.item !== undefined ? props.item.console : 'PlayStation 5'}
+          defaultValue={props.item !== undefined ? props.item.console : gameConsole}
           onChange={e => setGameConsole(e.target.value)}
         >
           <option value="PlayStation 5">PlayStation 5</option>

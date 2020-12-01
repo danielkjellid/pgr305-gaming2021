@@ -5,7 +5,7 @@ const CharacterForm = (props) => {
   const [checkFormValidated, setCheckFormValidated] = useState(false)
   const [characterName, setCharacterName] = useState('')
   const [characterImage, setCharacterImage] = useState('')
-  const [characterGender, setCharacterGender] = useState('')
+  const [characterGender, setCharacterGender] = useState('Male')
   const [characterHomeWorld, setCharacterHomeWorld] = useState('')
   const [characterGames, setCharacterGames] = useState('')
 
@@ -108,7 +108,7 @@ const CharacterForm = (props) => {
           required
           as="select"
           custom
-          defaultValue={props.item !== undefined ? props.item.gender : 'Male'}
+          defaultValue={props.item !== undefined ? props.item.gender : characterGender}
           onChange={e => setCharacterGender(e.target.value)}
         >
           <option value="Male">Male</option>
