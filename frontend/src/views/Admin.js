@@ -92,8 +92,6 @@ const Admin = () => {
   }
 
   const handleEditInstance = (key, item) => {
-    console.log(key)
-    console.log(item)
     if (key === 'games') {
       findAndReplace(dummyGames, item)
     } else if (key === 'characters') {
