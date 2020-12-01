@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Tabs, Tab, Modal, Button } from 'react-bootstrap'
 
-import GameAddForm from '../components/GameAddForm'
-import CharacterAddForm from '../components/CharacterAddForm'
+import GameForm from './GameForm'
+import CharacterForm from './CharacterForm'
 
 const InstanceAddModal = (props) => {
 
@@ -38,11 +38,11 @@ const InstanceAddModal = (props) => {
             activeKey={key}
             onSelect={(k) => setKey(k)}
           >
-            <Tab eventKey="games" title="Game">
-              <GameAddForm addGame={handleAddInstance} />
+            <Tab className="mt-3" eventKey="games" title="Game">
+              <GameForm item={props.item} submit={handleAddInstance} />
             </Tab>
-            <Tab eventKey="characters" title="Character">
-              <CharacterAddForm addCharacter={handleAddInstance} games={props.games} />
+            <Tab className="mt-3" eventKey="characters" title="Character">
+              <CharacterForm submit={handleAddInstance} games={props.games} />
             </Tab>
           </Tabs>
         </Modal.Body>
@@ -51,7 +51,7 @@ const InstanceAddModal = (props) => {
             Cancel
           </Button>
           {/* ternary exp decides which form is to be submitted */}
-          <Button variant="success" type="submit" form={key === 'games' ? 'game-add-form' : 'character-add-form'}>Add</Button>
+          <Button variant="success" type="submit" form={key === 'games' ? 'game-form' : 'character-form'}>Add</Button>
         </Modal.Footer>
       </div>
     </Modal>

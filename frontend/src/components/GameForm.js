@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Form, InputGroup } from 'react-bootstrap'
+import { Form, InputGroup, Image } from 'react-bootstrap'
 
-const GameAddForm = (props) => {
+const GameForm = (props) => {
 
   // base state
   const [checkFormValidated, setCheckFormValidated] = useState(false)
@@ -12,7 +12,7 @@ const GameAddForm = (props) => {
   const [gameConsole, setGameConsole] = useState('')
 
   // handler for adding a game instance
-  const handleGameAdd = (event) => {
+  const handleSubmit = (event) => {
     const form = event.currentTarget
 
     // check if form is invalid
@@ -30,33 +30,47 @@ const GameAddForm = (props) => {
       setCheckFormValidated(true)
 
       // create a new object with new data
-      const item = {
-        id: 999, // temporary ID, to be removed
-        title: gameTitle,
-        image: gameImage,
-        genre: gameGenre,
-        price: gamePrice,
-        console: gameConsole
+      let item = {}
+
+      if (props.item !== undefined) {
+        item = {
+          id: props.item.id,
+          title: gameTitle !== '' ? gameTitle : props.item.title,
+          image: gameImage !== '' ? gameImage : props.item.image,
+          genre: gameGenre !== '' ? gameGenre : props.item.category,
+          price: gamePrice !== '' ? gamePrice : props.item.price,
+          console: gameConsole !== '' ? gameConsole : props.item.console
+        }
+      } else {
+        item = {
+          id: 999, // temporary ID, to be removed
+          title: gameTitle,
+          image: gameImage,
+          genre: gameGenre,
+          price: gamePrice,
+          console: gameConsole
+        }
       }
 
       // send item object to parent
-      props.addGame(item)
+      props.submit(item)
     }
   }
 
   return (
     <Form 
-      id="game-add-form" 
+      id="game-form" 
       noValidate 
       validated={checkFormValidated} 
-      onSubmit={handleGameAdd}
+      onSubmit={handleSubmit}
     >
-      <Form.Group controlId="id_game_title" className="mt-3">
+      <Form.Group controlId="id_game_title">
         <Form.Label>Title</Form.Label>
         <Form.Control
           required
-          type="text" 
-          placeholder="Fifa 21"
+          type="text"
+          defaultValue={props.item !== undefined ? props.item.title : null}
+          placeholder="Title of the game"
           onChange={e => setGameTitle(e.target.value)}
         />
         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -65,11 +79,19 @@ const GameAddForm = (props) => {
       <Form.Group controlId="id_game_file" >
         <Form.Label>Image</Form.Label>
         <Form.File
-          required
-          label="Upload game cover" 
+          required={props.item !== undefined ? false : true}
+          label={props.item !== undefined ? props.item.image : 'Upload game cover'} 
           custom
           onChange={e => setGameImage(e.target.value)}
         />
+        {props.item !== undefined 
+          ? <Image 
+              className="product-image-tooltip mt-2" 
+              src={props.item.image} 
+              rounded
+            /> 
+          : null
+        }
         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         <Form.Control.Feedback type="invalid">You have to upload an image!</Form.Control.Feedback>
       </Form.Group>
@@ -79,10 +101,11 @@ const GameAddForm = (props) => {
           required
           as="select"
           custom
+          defaultValue={props.item !== undefined ? props.item.genre : 'Fantasy'}
           onChange={e => setGameGenre(e.target.value)}
         >
-          <option value="0">Fantasy</option>
-          <option value="1">Sport</option>
+          <option value="Fantasy">Fantasy</option>
+          <option value="Sport">Sport</option>
         </Form.Control>
         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
       </Form.Group>
@@ -92,7 +115,8 @@ const GameAddForm = (props) => {
           <Form.Control
             required
             type="number" 
-            placeholder="599"
+            placeholder="Price of the game, e.g. 599"
+            defaultValue={props.item !== undefined ? props.item.price : null}
             onChange={e => setGamePrice(e.target.value)}
           />
           <InputGroup.Append>
@@ -108,11 +132,11 @@ const GameAddForm = (props) => {
           required
           as="select"
           custom
-          defaultValue="ps5"
+          defaultValue={props.item !== undefined ? props.item.console : 'PlayStation 5'}
           onChange={e => setGameConsole(e.target.value)}
         >
-          <option value="ps5">ps5</option>
-          <option value="xbox">xbox</option>
+          <option value="PlayStation 5">PlayStation 5</option>
+          <option value="XBOX Series X">XBOX Series X</option>
         </Form.Control>
         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
       </Form.Group>
@@ -120,4 +144,4 @@ const GameAddForm = (props) => {
   )
 }
 
-export default GameAddForm
+export default GameForm

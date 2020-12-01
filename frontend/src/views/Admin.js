@@ -12,8 +12,8 @@ import {
   Row,
   Col } from 'react-bootstrap'
 import InstanceDeleteModal from '../components/InstanceDeleteModal'
-import GameEditModal from '../components/GameEditModal'
 import InstanceAddModal from '../components/InstanceAddModal'
+import InstanceEditModal from '../components/InstanceEditModal'
 
 const Admin = () => {
   // data for the time being
@@ -59,24 +59,44 @@ const Admin = () => {
   // state controlling tabs
   const [key, setKey] = useState('games')
 
-  // edit game instance states and handlers
-  const [showEditGameModal, setShowEditGameModal] = useState(false)
-  const handleEditGameModalClose = () => setShowEditGameModal(false)
-  const handleEditGameModalShow = (id) => {
-    // save clickedItem in variable
-    const clickedItem = dummyGames.filter((instance) => instance.id === id)
+  const findAndSplice = (arr) => {
+    const itemIndex = arr.findIndex(item => item.id === clickedItem.id)
+    return arr.splice(itemIndex, 1)
+  }
+
+  const findAndReplace = (arr, obj) => {
+    const itemIndex = arr.findIndex(item => item.id === clickedItem.id)
+    return arr.splice(itemIndex, 1, obj)
+  }
+
+  const [showEditModal, setShowEditModal] = useState(false)
+  const handleEditModalClose = () => setShowEditModal(false)
+  const handleEditModalShow = (id) => {
+
+    // set local clickedItem variable
+    let clickedItem = null
+
+     // populate clickedItem variable
+    if (key === 'games') {
+      clickedItem = dummyGames.filter((instance) => instance.id === id)
+    } else if (key === 'characters') {
+      clickedItem = dummyCharacters.filter((instance) => instance.id === id)
+    }
 
     // set states
     setClickedItem(clickedItem[0])
-    setShowEditGameModal(true)
+    setShowEditModal(true)
   }
 
-  const handleEditModalSubmit = (item) => {
-    // TODO: handle patch to api and update local state
-    // item edited can be accessed by the item var
-    // example: console.log(item)
-
-    setShowEditGameModal(false)
+  const handleEditInstance = (key, item) => {
+    console.log(key)
+    console.log(item)
+    if (key === 'games') {
+      findAndReplace(dummyGames, item)
+    } else if (key === 'characters') {
+      findAndReplace(dummyCharacters, item)
+    }
+    setShowEditModal(false)
   }
 
   // delete instance states and handlers
@@ -98,18 +118,12 @@ const Admin = () => {
     setShowDeleteModal(true)
   }
 
-  const findAndSplice = (arr) => {
-    const itemIndex = arr.findIndex(item => item.id === clickedItem.id)
-    return arr.splice(itemIndex, 1)
-  }
-
   const handleDeleteInstance = () => {
 
     if (key === 'games') {
       findAndSplice(dummyGames)
     } else if (key === 'characters') {
       findAndSplice(dummyCharacters)
-      console.log('deleted')
     }
 
     // TODO: handle delete at api endpoint
@@ -198,7 +212,7 @@ const Admin = () => {
                       <td>{data.console}</td>
                       <td>
                         <ButtonGroup>
-                          <Button variant="secondary" onClick={() => handleEditGameModalShow(data.id)}>
+                          <Button variant="secondary">
                             <svg className="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                             </svg>
@@ -261,6 +275,7 @@ const Admin = () => {
               </Table>
             </Tab>
           </Tabs>
+          <Button onClick={() => handleEditModalShow(1)}>Show</Button>
         </Container>
 
         <InstanceDeleteModal
@@ -277,12 +292,14 @@ const Admin = () => {
           submitAdd={handleAddInstance}
           games={dummyGames}
         />
-
-        <GameEditModal
-          show={showEditGameModal}
-          onHide={handleEditGameModalClose}
-          submitEdit={handleEditModalSubmit}
-          game={clickedItem.title !== undefined ? clickedItem.title : ''}
+        
+        <InstanceEditModal
+          show={showEditModal}
+          onHide={handleEditModalClose}
+          tab={key}
+          item={clickedItem}
+          submitEdit={handleEditInstance}
+          games={dummyGames}
         />
       </div>
     </div>

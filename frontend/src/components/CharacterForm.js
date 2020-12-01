@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Form } from 'react-bootstrap'
 
-const CharacterAddForm = (props) => {
+const CharacterForm = (props) => {
   const [checkFormValidated, setCheckFormValidated] = useState(false)
   const [characterName, setCharacterName] = useState('')
   const [characterGender, setCharacterGender] = useState('')
@@ -19,7 +19,7 @@ const CharacterAddForm = (props) => {
     setCharacterGames(selected)
   }
 
-  const handleCharacterAdd = (event) => {
+  const handleSubmit = (event) => {
     const form = event.currentTarget
 
     // check if form is invalid
@@ -36,33 +36,45 @@ const CharacterAddForm = (props) => {
       event.stopPropagation()
       setCheckFormValidated(true)
 
-      // create a new object with new data
-      const item = {
-        id: 999, // temporary ID, to be removed
-        name: characterName,
-        gender: characterGender,
-        homeWorld: characterHomeWorld,
-        gamesId: characterGames
+      let item = {}
+
+      if (props.item !== undefined) {
+        item = {
+          id: props.item.id,
+          name: characterName !== '' ? characterName : props.item.name,
+          gender: characterGender !== '' ? characterGender : props.item.gender,
+          homeWorld: characterHomeWorld !== '' ? characterHomeWorld : props.item.homeWorld,
+          gamesId: characterGames !== '' ? characterGames : props.item.gamesId,
+        }
+      } else {
+        item = {
+          id: 999, // temporary ID, to be removed
+          name: characterName,
+          gender: characterGender,
+          homeWorld: characterHomeWorld,
+          gamesId: characterGames
+        }
       }
 
       // send item object to parent
-      props.addCharacter(item)
+      props.submit(item)
     }
   }
 
   return (
     <Form 
-      id="character-add-form" 
+      id="character-form" 
       noValidate 
       validated={checkFormValidated} 
-      onSubmit={handleCharacterAdd}
+      onSubmit={handleSubmit}
     >
-      <Form.Group controlId="id_character_name" className="mt-3">
+      <Form.Group controlId="id_character_name">
         <Form.Label>Name</Form.Label>
         <Form.Control
           required
-          type="text" 
-          placeholder="Mario"
+          type="text"
+          defaultValue={props.item !== undefined ? props.item.name : null}
+          placeholder="Name of character"
           onChange={e => setCharacterName(e.target.value)}
         />
         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -74,7 +86,7 @@ const CharacterAddForm = (props) => {
           required
           as="select"
           custom
-          defaultValue="Male"
+          defaultValue={props.item !== undefined ? props.item.gender : 'Male'}
           onChange={e => setCharacterGender(e.target.value)}
         >
           <option value="Male">Male</option>
@@ -87,8 +99,9 @@ const CharacterAddForm = (props) => {
         <Form.Label>Home wold</Form.Label>
         <Form.Control
           required
-          type="text" 
-          placeholder="Earth"
+          type="text"
+          defaultValue={props.item !== undefined ? props.item.homeWorld : null}
+          placeholder="World of which the character lives in"
           onChange={e => setCharacterHomeWorld(e.target.value)}
         />
         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -101,6 +114,7 @@ const CharacterAddForm = (props) => {
           as="select"
           multiple
           custom
+          defaultValue={props.item !== undefined ? props.item.gamesId : null}
           values={props.games}
           onChange={e => handleMultipleGamesSelect(e)}
         >
@@ -114,4 +128,4 @@ const CharacterAddForm = (props) => {
   )
 }
 
-export default CharacterAddForm
+export default CharacterForm
