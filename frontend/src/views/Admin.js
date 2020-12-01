@@ -42,14 +42,14 @@ const Admin = () => {
       name: 'Mario',
       gender: 'M',
       homeWorld: 'Mushroom Kingdom',
-      gameId: 3
+      gamesId: [1]
     },
     {
       id: 2,
       name: 'Luigi',
       gender: 'M',
       homeWorld: 'Mushroom Kingdom',
-      gameId: 3
+      gamesId: [1, 2]
     },
   ])
 
@@ -232,7 +232,15 @@ const Admin = () => {
                       <td>{data.name}</td>
                       <td>{data.gender}</td>
                       <td>{data.homeWorld}</td>
-                      <td>{data.gameId}</td>
+                      <td>
+                        <ul>
+                        {data.gamesId.map(id => (
+                          dummyGames.filter(game => game.id === parseInt(id)).map(filteredGame => (
+                            <li key={filteredGame.id}>{filteredGame.title}</li>
+                          ))
+                        ))}
+                        </ul>
+                      </td>
                       <td>
                         <ButtonGroup>
                           <Button variant="secondary">

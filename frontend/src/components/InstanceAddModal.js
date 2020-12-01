@@ -72,10 +72,10 @@ const InstanceAddModal = (props) => {
         name: characterName,
         gender: characterGender,
         homeWorld: characterHomeWorld,
-        games: characterGames
+        gamesId: characterGames
       }
     }
-
+    console.log(item)
     props.submitAdd(key, item)
   }
 
