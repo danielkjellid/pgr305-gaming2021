@@ -24,6 +24,17 @@ const InstanceAddModal = (props) => {
     setKey(props.tab)
   }, [props.tab])
 
+  const handleMultipleGamesSelect = (event) => {
+    const selected = []
+    let selectedOption = (event.target.selectedOptions)
+
+    for (let i = 0; i < selectedOption.length; i++) {
+      selected.push(selectedOption.item(i).value)
+    }
+
+    setCharacterGames(selected)
+  }
+
   const handleAddInstance = (event) => {
     const form = event.currentTarget
 
@@ -32,6 +43,7 @@ const InstanceAddModal = (props) => {
     if (form.checkValidity() === false) {
       event.preventDefault()
       event.stopPropagation()
+      console.log('fired')
     }
 
     // if form is valid, stop page reload and propagation
@@ -44,7 +56,7 @@ const InstanceAddModal = (props) => {
     let item = {}
 
     if (key === 'games') {
-      
+
       item = {
         id: 999, // temporary ID, to be removed
         title: gameTitle,
@@ -62,11 +74,8 @@ const InstanceAddModal = (props) => {
         homeWorld: characterHomeWorld,
         games: characterGames
       }
-    } else if (key === 'categories') {
-
     }
 
-    console.log(item)
     props.submitAdd(key, item)
   }
 
@@ -198,17 +207,15 @@ const InstanceAddModal = (props) => {
                   as="select"
                   multiple
                   custom
-                  onChange={e => setCharacterGames(e.target.value)}
+                  values={props.games}
+                  onChange={e => handleMultipleGamesSelect(e)}
                 >
                   {props.games.map(game => 
-                    <option key={game.title}>{game.title}</option>
+                    <option key={game.id} value={game.id}>{game.title}</option>
                   )}
                 </Form.Control>
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               </Form.Group>
-            </Tab>
-            <Tab eventKey="categories" title="Category">
-              <p>Category</p>
             </Tab>
           </Tabs>
         </Modal.Body>

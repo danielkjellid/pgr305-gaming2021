@@ -129,6 +129,8 @@ const Admin = () => {
       // handle new characters
       dummyCharacters.push(item)
     }
+
+    setShowAddModal(false)
   }
  
   return (
