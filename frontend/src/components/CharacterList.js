@@ -1,8 +1,9 @@
 import React from 'react'
 import CharacterItem from './CharacterItem'
 import { useAsyncStateContext } from '../context/AsyncStateContext'
+import { Link } from 'react-router-dom'
 
-const CharacterList = ({ preview }) => {
+const CharacterList = ({ preview, url }) => {
   const { characterState } = useAsyncStateContext()
 
   const characters = preview
@@ -11,7 +12,12 @@ const CharacterList = ({ preview }) => {
 
   return characters
     ? characters.map((character) => (
-        <CharacterItem key={character.id} character={character} />
+        <Link
+          to={`${url}/${character.id}`}
+          style={{ textDecoration: 'none', color: 'inherit' }}
+        >
+          <CharacterItem key={character.id} character={character} />
+        </Link>
       ))
     : null
 }

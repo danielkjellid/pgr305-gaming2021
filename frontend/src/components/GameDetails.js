@@ -17,8 +17,19 @@ const GameDetails = ({ data }) => {
             <img src='https://source.unsplash.com/random/300x400' alt='' />
           </div>
           <div className='game-details-desc'>
-            <h2> {game.title} dskdkosdoksko </h2>
-            <p> {game.id} </p>
+            <h2> {game.title} </h2>
+            <p>
+              <span className='desc-gray'> Genre: </span> Fantasy
+            </p>
+            <p>
+              <span className='desc-gray'> Price: </span> 599,-
+            </p>
+            <p>
+              <span className='desc-gray'> Console: </span> PS5 & Xbox
+            </p>
+            <div className='characters-in-game'>
+              <h3>Characters</h3>
+            </div>
           </div>
         </div>
       </>
