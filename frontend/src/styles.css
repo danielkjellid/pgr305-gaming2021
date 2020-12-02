@@ -1,7 +1,7 @@
 /* Global */
 
 body {
-  background-color: #f1f5f9;
+  background-color: #f9fafb;
   box-sizing: border-box;
   font-family: 'Open Sans', sans-serif;
   margin: 0 auto;
@@ -121,6 +121,18 @@ body {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.character-card {
+  text-align: center;
+}
+
+.character-card h3 {
+  font-weight: 600;
+}
+
+.character-card img {
+  border-radius: 50%;
+}
+
 .section-heading {
   display: flex;
   justify-content: space-between;
@@ -204,6 +216,11 @@ body {
 
 .character-details-desc p {
   font-weight: 600;
+}
+
+.footer {
+  width: 100%;
+  text-align: center;
 }
 
 /* Media queries */
