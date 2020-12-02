@@ -1,6 +1,6 @@
 import React from 'react'
-import GameList from '../components/GameList'
-import CharacterList from '../components/CharacterList'
+import GameList from '../components/game/GameList'
+import CharacterList from '../components/character/CharacterList'
 import Hero from '../components/Hero'
 import HeadingNavigation from '../components/HeadingNavigation'
 import { Container, Row } from 'react-bootstrap'

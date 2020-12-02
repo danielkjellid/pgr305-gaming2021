@@ -1,9 +1,9 @@
 import React from 'react'
-import CharacterList from '../components/CharacterList'
+import CharacterList from '../components/character/CharacterList'
 import { Container, Row } from 'react-bootstrap'
 import { useAsyncStateContext } from '../context/AsyncStateContext'
 import { useRouteMatch, Switch, Route } from 'react-router-dom'
-import CharacterDetails from '../components/CharacterDetails'
+import CharacterDetails from '../components/character/CharacterDetails'
 
 const Characters = () => {
   const { characterState } = useAsyncStateContext()
