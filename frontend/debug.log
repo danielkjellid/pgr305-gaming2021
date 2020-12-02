@@ -1,1 +1,3 @@
 [1202/140127.441:ERROR:directory_reader_win.cc(43)] FindFirstFile: Systemet finner ikke angitt bane. (0x3)
+[1202/140127.444:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\ludvi\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\0b011bcb-f195-4276-a74d-1a871e2a8691: Systemet finner ikke angitt bane. (0x3)
+[1202/140127.445:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\ludvi\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\b38df1ab-e76c-496c-ba0a-9e8a24039b32: Systemet finner ikke angitt bane. (0x3)
