@@ -5,6 +5,7 @@ body {
   box-sizing: border-box;
   font-family: 'Open Sans', sans-serif;
   margin: 0 auto;
+  position: relative;
 }
 
 /* Main styles */
@@ -216,6 +217,52 @@ body {
 
 .character-details-desc p {
   font-weight: 600;
+}
+
+.game-hero {
+  background-image: url(./assets/games.jpg);
+  width: 100vw;
+  height: 500px;
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.game-hero h2 {
+  font-size: 72px;
+  font-weight: 700;
+  font-family: Montserrat, 'sans-serif';
+  color: #fafaf9;
+  background-color: rgba(0, 123, 255, 0.9);
+  padding: 2rem;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.character-hero {
+  background-image: url(./assets/super-smash.png);
+  width: 100vw;
+  height: 500px;
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.character-hero h2 {
+  font-size: 72px;
+  font-weight: 700;
+  font-family: Montserrat, 'sans-serif';
+  color: #fafaf9;
+  background-color: rgba(0, 123, 255, 0.9);
+  padding: 2rem;
+  border-radius: 4px;
 }
 
 .footer {
