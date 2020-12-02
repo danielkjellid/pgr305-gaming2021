@@ -4789,19 +4789,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/danielkjellid/.nuget/packages/": {}
+    "C:\\Users\\ludvi\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/danielkjellid/Documents/Education/Høst 2020/PGR305 - Webutvikling 3/Eksamen/pgr305-gaming2021/backend/backend.csproj",
+      "projectUniqueName": "C:\\Users\\ludvi\\Documents\\Webutvikling\\SKOLE\\pgr305-gaming2021\\backend\\backend.csproj",
       "projectName": "backend",
-      "projectPath": "/Users/danielkjellid/Documents/Education/Høst 2020/PGR305 - Webutvikling 3/Eksamen/pgr305-gaming2021/backend/backend.csproj",
-      "packagesPath": "/Users/danielkjellid/.nuget/packages/",
-      "outputPath": "/Users/danielkjellid/Documents/Education/Høst 2020/PGR305 - Webutvikling 3/Eksamen/pgr305-gaming2021/backend/obj/",
+      "projectPath": "C:\\Users\\ludvi\\Documents\\Webutvikling\\SKOLE\\pgr305-gaming2021\\backend\\backend.csproj",
+      "packagesPath": "C:\\Users\\ludvi\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ludvi\\Documents\\Webutvikling\\SKOLE\\pgr305-gaming2021\\backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/danielkjellid/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\ludvi\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -4846,7 +4846,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.201/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

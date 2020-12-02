@@ -11,6 +11,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+using backend.Models;
+using backend.Services;
+using Microsoft.Extensions.Options;
+
 namespace backend
 {
     public class Startup
@@ -26,6 +30,16 @@ namespace backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.Configure<BackendstoreDatabaseSettings>(
+                Configuration.GetSection(nameof(BackendstoreDatabaseSettings))
+            );
+
+            services.AddSingleton<IBackendstoreDatabaseSettings>(
+                sp => sp.GetRequiredService<IOptions<BackendstoreDatabaseSettings>>().Value
+            );
+
+            services.AddSingleton<GamesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
