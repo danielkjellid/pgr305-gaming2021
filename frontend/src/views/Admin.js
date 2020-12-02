@@ -10,7 +10,8 @@ import {
   OverlayTrigger,
   Tooltip,
   Row,
-  Col } from 'react-bootstrap'
+  Col,
+  Form } from 'react-bootstrap'
 
 import InstanceDeleteModal from '../components/InstanceDeleteModal'
 import InstanceAddModal from '../components/InstanceAddModal'
@@ -58,6 +59,10 @@ const Admin = () => {
 
   // empty state to store item which is to be edited or deleted
   const [clickedItem, setClickedItem] = useState({})
+
+  // state that controls query and displays queried instances
+  const [gamesQuery, setGamesQuery] = useState('')
+  const [characterQuery, setCharacterQuery] = useState('')
 
   // state controlling tabs
   const [key, setKey] = useState('games')
@@ -172,7 +177,13 @@ const Admin = () => {
             className="mt-4"
           >
             <Tab eventKey="games" title="Games">
-              <Table className="mt-4" responsive striped bordered>
+              <Form className="mt-4">
+                <Form.Group>
+                  <Form.Label>Search</Form.Label>
+                  <Form.Control type="text" placeholder="Search for games" onChange={e => setGamesQuery(e.target.value)} />
+                </Form.Group>
+              </Form>
+              <Table responsive striped bordered>
                 <thead>
                   <tr>
                     <th>Image</th>
@@ -184,7 +195,7 @@ const Admin = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {dummyGames.map((data) => (
+                  {dummyGames.filter(game => game.title.includes(gamesQuery)).map((data) => (
                     <tr key={data.id}>
                       <td>
                         <OverlayTrigger
@@ -231,7 +242,13 @@ const Admin = () => {
               </Table>
             </Tab>
             <Tab eventKey='characters' title='Characters'>
-              <Table className="mt-4" responsive striped bordered>
+              <Form className="mt-4">
+                <Form.Group>
+                  <Form.Label>Search</Form.Label>
+                  <Form.Control type="text" placeholder="Search for characters" onChange={e => setCharacterQuery(e.target.value)} />
+                </Form.Group>
+              </Form>
+              <Table responsive striped bordered>
                 <thead>
                   <tr>
                     <th>Image</th>
@@ -243,7 +260,7 @@ const Admin = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {dummyCharacters.map((data) => (
+                  {dummyCharacters.filter(character => character.name.includes(characterQuery)).map((data) => (
                     <tr key={data.id}>
                       <td>
                         <OverlayTrigger
