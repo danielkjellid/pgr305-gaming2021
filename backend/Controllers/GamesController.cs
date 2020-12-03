@@ -1,5 +1,8 @@
+using System.IO;
 using backend.Models;
 using backend.Services;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -11,9 +14,11 @@ namespace backend.Controllers
     public class GamesController : ControllerBase
     {
         private readonly GamesService _gamesService;
-        public GamesController(GamesService gamesService)
+        private readonly IWebHostEnvironment _hosting;
+        public GamesController(GamesService gamesService, IWebHostEnvironment hosting)
         {
             _gamesService = gamesService;
+            _hosting = hosting;
         }
 
         [HttpGet]
@@ -46,6 +51,17 @@ namespace backend.Controllers
             // create instance and return instance created
             _gamesService.Create(game);
             return game;
+        }
+
+        [Route("[action]")]
+        public void SavePicture(IFormFile file) {
+            string webrootPath = _hosting.WebRootPath;
+            string absolutePath = Path.Combine($"{webrootPath}/images/games/{file.FileName}");
+
+            using(var fileStream = new FileStream(absolutePath, FileMode.Create)) 
+            {
+                file.CopyTo(fileStream);
+            }
         }
 
         [HttpPut("{id:length(24)}")]

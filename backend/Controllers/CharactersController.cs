@@ -1,5 +1,8 @@
+using System.IO;
 using backend.Models;
 using backend.Services;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -11,9 +14,11 @@ namespace backend.Controllers
     public class CharactersController : ControllerBase
     {
         private readonly CharactersService _charactersService;
-        public CharactersController(CharactersService charactersService)
+        private readonly IWebHostEnvironment _hosting;
+        public CharactersController(CharactersService charactersService, IWebHostEnvironment hosting)
         {
             _charactersService = charactersService;
+            _hosting = hosting;
         }
 
         [HttpGet]
@@ -46,6 +51,17 @@ namespace backend.Controllers
             // create instance and return instance created
             _charactersService.Create(character);
             return character;
+        }
+
+        [Route("[action]")]
+        public void SavePicture(IFormFile file) {
+            string webrootPath = _hosting.WebRootPath;
+            string absolutePath = Path.Combine($"{webrootPath}/images/characters/{file.FileName}");
+
+            using(var fileStream = new FileStream(absolutePath, FileMode.Create)) 
+            {
+                file.CopyTo(fileStream);
+            }
         }
 
         [HttpPut("{id:length(24)}")]
