@@ -10,12 +10,9 @@ const CharacterItem = ({ character, url }) => {
         style={{ textDecoration: 'none', color: 'inherit' }}
       >
         <div className='character-card'>
-          <img
-            src='https://source.unsplash.com/random/200x200'
-            alt='Character'
-          />
-          <h3> {character.title} </h3>
-          <p>Homeworld: Azeroth</p>
+          <img src={character.image} alt='Character' />
+          <h3> {character.name} </h3>
+          <p> {character.homeWorld} </p>
         </div>
       </Link>
     </Col>

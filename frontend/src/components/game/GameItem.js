@@ -10,12 +10,12 @@ const GameItem = ({ game, url }) => {
         style={{ textDecoration: 'none', color: 'inherit' }}
       >
         <Card className='card'>
-          <Card.Img variant='top' src='https://source.unsplash.com/random/' />
+          <Card.Img variant='top' src={game.image} />
           <Card.Body>
             <Card.Title>{game.title}</Card.Title>
-            <Card.Text>Genre: Action</Card.Text>
+            <Card.Text>{game.genre}</Card.Text>
           </Card.Body>
-          <Card.Footer>PS5 & Xbox</Card.Footer>
+          <Card.Footer> {game.console} </Card.Footer>
         </Card>
       </Link>
     </Col>

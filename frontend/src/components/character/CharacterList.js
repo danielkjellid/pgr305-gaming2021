@@ -3,7 +3,7 @@ import CharacterItem from './CharacterItem'
 import { useAsyncStateContext } from '../../context/AsyncStateContext'
 import { Link } from 'react-router-dom'
 
-const CharacterList = ({ preview, url }) => {
+const CharacterList = ({ preview, url, query }) => {
   const { characterState } = useAsyncStateContext()
 
   const characters = preview
@@ -11,10 +11,19 @@ const CharacterList = ({ preview, url }) => {
     : characterState.data
 
   return characters
+    ? characters
+        .filter((character) =>
+          character.name.toLowerCase().includes(query.toLowerCase())
+        )
+        .map((character) => (
+          <CharacterItem key={character.id} character={character} url={url} />
+        ))
+    : null
+  /*  return characters
     ? characters.map((character) => (
         <CharacterItem key={character.id} character={character} url={url} />
       ))
-    : null
+    : null */
 }
 
 export default CharacterList
