@@ -22,3 +22,8 @@ frontend/npm-debug.log*
 frontend/yarn-debug.log*
 frontend/yarn-error.log*
 
+# Visual Studio cache files
+# files ending in .cache can be ignored
+backend/*.[Cc]ache
+# but keep track of directories ending in .cache
+backend/!*.[Cc]ache/
