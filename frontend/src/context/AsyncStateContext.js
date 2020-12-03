@@ -15,12 +15,8 @@ export const useAsyncStateContext = () => {
 }
 
 const AsyncStateProvider = ({ children }) => {
-  const characterState = useAsyncState(
-    'https://localhost:5001/characters'
-  )
-
+  const characterState = useAsyncState('https://localhost:5001/characters')
   const gameState = useAsyncState('https://localhost:5001/games')
-  //const reviegawsState = customHook
 
   return (
     <AsyncStateContext.Provider

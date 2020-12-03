@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import Header from '../components/Header'
+import Header from '../components/common/Header'
 import Home from '../views/Home'
 import Characters from '../views/Characters'
 import Games from '../views/Games'

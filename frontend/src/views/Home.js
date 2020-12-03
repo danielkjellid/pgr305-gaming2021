@@ -1,8 +1,8 @@
 import React from 'react'
 import GameList from '../components/game/GameList'
 import CharacterList from '../components/character/CharacterList'
-import Hero from '../components/Hero'
-import HeadingNavigation from '../components/HeadingNavigation'
+import Hero from '../components/common/Hero'
+import HeadingNavigation from '../components/common/HeadingNavigation'
 import { Container, Row } from 'react-bootstrap'
 
 const Home = () => {

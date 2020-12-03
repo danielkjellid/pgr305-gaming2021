@@ -11,13 +11,12 @@ import {
   Tooltip,
   Row,
   Col,
-  Form,
 } from 'react-bootstrap'
 
-import InstanceDeleteModal from '../components/InstanceDeleteModal'
-import InstanceAddModal from '../components/InstanceAddModal'
-import InstanceEditModal from '../components/InstanceEditModal'
-import SearchBar from '../components/SearchBar'
+import InstanceDeleteModal from '../components/modal/InstanceDeleteModal'
+import InstanceAddModal from '../components/modal/InstanceAddModal'
+import InstanceEditModal from '../components/modal/InstanceEditModal'
+import SearchBar from '../components/common/SearchBar'
 import { useAsyncStateContext } from '../context/AsyncStateContext'
 import axios from 'axios'
 
@@ -25,45 +24,6 @@ const Admin = () => {
   const gameUrl = 'https://localhost:5001/games/'
   const characterUrl = 'https://localhost:5001/characters/'
 
-  // data for the time being
-  const [dummyGames] = useState([
-    {
-      id: 1,
-      image: 'https://www.elkjop.no/primaryimage/193479',
-      title: 'Fifa 21',
-      genre: 'Sport',
-      price: 599,
-      console: 'PlayStation 5',
-    },
-    {
-      id: 2,
-      title: 'Bloodborne',
-      image:
-        'https://www.elkjop.no/image/dv_web_D180001002318523/PS4HITS6/bloodborne-ps4.jpg?$prod_all4one$',
-      genre: 'Fantasy',
-      price: 199,
-      console: 'PlayStation 5',
-    },
-  ])
-  const [dummyCharacters] = useState([
-    {
-      id: 1,
-      name: 'Mario',
-      image:
-        'https://upload.wikimedia.org/wikipedia/en/a/a9/MarioNSMBUDeluxe.png',
-      gender: 'Male',
-      homeWorld: 'Mushroom Kingdom',
-      gamesId: [1],
-    },
-    {
-      id: 2,
-      name: 'Luigi',
-      image: 'https://upload.wikimedia.org/wikipedia/en/7/73/Luigi_NSMBUDX.png',
-      gender: 'Male',
-      homeWorld: 'Mushroom Kingdom',
-      gamesId: [1, 2],
-    },
-  ])
   const { gameState } = useAsyncStateContext()
   const { characterState } = useAsyncStateContext()
 
@@ -207,12 +167,6 @@ const Admin = () => {
                 placeholder='Search for games'
                 onChange={(e) => setGamesQuery(e.target.value.toLowerCase())}
               />
-              {/* <Form className="mt-4">
-                <Form.Group>
-                  <Form.Label>Search</Form.Label>
-                  <Form.Control type="text" placeholder="Search for games" onChange={e => setGamesQuery(e.target.value.toLowerCase())} />
-                </Form.Group>
-              </Form> */}
               <Table responsive striped bordered>
                 <thead>
                   <tr>

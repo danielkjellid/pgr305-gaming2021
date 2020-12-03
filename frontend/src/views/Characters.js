@@ -4,8 +4,8 @@ import { useAsyncStateContext } from '../context/AsyncStateContext'
 import { useRouteMatch, Switch, Route } from 'react-router-dom'
 import CharacterList from '../components/character/CharacterList'
 import CharacterDetails from '../components/character/CharacterDetails'
-import SubPageHero from '../components/SubPageHero'
-import SearchBar from '../components/SearchBar'
+import SubPageHero from '../components/common/SubPageHero'
+import SearchBar from '../components/common/SearchBar'
 
 const Characters = () => {
   const { characterState } = useAsyncStateContext()

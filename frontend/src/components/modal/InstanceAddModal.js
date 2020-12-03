@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Tabs, Tab, Modal, Button } from 'react-bootstrap'
 
-import GameForm from './game/GameForm'
-import CharacterForm from './character/CharacterForm'
+import GameForm from '../game/GameForm'
+import CharacterForm from '../character/CharacterForm'
 
 const InstanceAddModal = (props) => {
   // state controlling active tab

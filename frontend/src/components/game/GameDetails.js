@@ -19,11 +19,7 @@ const GameDetails = ({ data }) => {
         </div>
         <div className='game-details'>
           <div>
-            <img 
-              className="game-image"
-              src={game.image} 
-              alt='' 
-            />
+            <img className='game-image' src={game.image} alt='Game cover' />
           </div>
           <div className='game-details-desc'>
             <h2> {game.title} </h2>
@@ -40,9 +36,17 @@ const GameDetails = ({ data }) => {
               <span className='desc-gray'>Characters: </span>
             </p>
             <Row>
-              {characterState.data?.filter(
-                character => character.gamesId.includes(gameId)).map(
-                  char => <Col><CharacterItem key={char.id} character={char} url={'/characters'} /></Col>)}
+              {characterState.data
+                ?.filter((character) => character.gamesId.includes(gameId))
+                .map((char) => (
+                  <Col>
+                    <CharacterItem
+                      key={char.id}
+                      character={char}
+                      url={'/characters'}
+                    />
+                  </Col>
+                ))}
             </Row>
           </div>
         </div>

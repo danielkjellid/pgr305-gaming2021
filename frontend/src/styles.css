@@ -227,7 +227,7 @@ body {
   display: flex;
 }
 
-.hero {
+.sub-hero {
   position: relative;
   width: 100vw;
   height: 500px;
@@ -248,7 +248,7 @@ body {
   background-image: url(./assets/super-smash.png);
 }
 
-.hero h2 {
+.sub-hero h2 {
   position: relative;
   font-size: 72px;
   font-weight: 700;

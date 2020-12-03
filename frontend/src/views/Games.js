@@ -4,8 +4,8 @@ import { useAsyncStateContext } from '../context/AsyncStateContext'
 import { Route, useRouteMatch, Switch } from 'react-router-dom'
 import GameList from '../components/game/GameList'
 import GameDetails from '../components/game/GameDetails'
-import SubPageHero from '../components/SubPageHero'
-import SearchBar from '../components/SearchBar'
+import SubPageHero from '../components/common/SubPageHero'
+import SearchBar from '../components/common/SearchBar'
 
 const Games = () => {
   const { gameState } = useAsyncStateContext()

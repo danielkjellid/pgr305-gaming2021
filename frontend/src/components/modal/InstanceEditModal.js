@@ -1,8 +1,8 @@
 import React from 'react'
 import { Modal, Button } from 'react-bootstrap'
 
-import GameForm from './game/GameForm'
-import CharacterForm from './character/CharacterForm'
+import GameForm from '../game/GameForm'
+import CharacterForm from '../character/CharacterForm'
 
 const InstanceEditModal = (props) => {
   const handleEditInstance = (item) => {
