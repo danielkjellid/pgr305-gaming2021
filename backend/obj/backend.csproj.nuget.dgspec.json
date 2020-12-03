@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/danielkjellid/Documents/Education/Høst 2020/PGR305 - Webutvikling 3/Eksamen/pgr305-gaming2021/backend/backend.csproj": {}
+    "/Users/danielkjellid/Documents/Education/Host 2020/PGR305 - Webutvikling 3/Eksamen/pgr305-gaming2021/backend/backend.csproj": {}
   },
   "projects": {
-    "/Users/danielkjellid/Documents/Education/Høst 2020/PGR305 - Webutvikling 3/Eksamen/pgr305-gaming2021/backend/backend.csproj": {
+    "/Users/danielkjellid/Documents/Education/Host 2020/PGR305 - Webutvikling 3/Eksamen/pgr305-gaming2021/backend/backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/danielkjellid/Documents/Education/Høst 2020/PGR305 - Webutvikling 3/Eksamen/pgr305-gaming2021/backend/backend.csproj",
+        "projectUniqueName": "/Users/danielkjellid/Documents/Education/Host 2020/PGR305 - Webutvikling 3/Eksamen/pgr305-gaming2021/backend/backend.csproj",
         "projectName": "backend",
-        "projectPath": "/Users/danielkjellid/Documents/Education/Høst 2020/PGR305 - Webutvikling 3/Eksamen/pgr305-gaming2021/backend/backend.csproj",
+        "projectPath": "/Users/danielkjellid/Documents/Education/Host 2020/PGR305 - Webutvikling 3/Eksamen/pgr305-gaming2021/backend/backend.csproj",
         "packagesPath": "/Users/danielkjellid/.nuget/packages/",
-        "outputPath": "/Users/danielkjellid/Documents/Education/Høst 2020/PGR305 - Webutvikling 3/Eksamen/pgr305-gaming2021/backend/obj/",
+        "outputPath": "/Users/danielkjellid/Documents/Education/Host 2020/PGR305 - Webutvikling 3/Eksamen/pgr305-gaming2021/backend/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/danielkjellid/.nuget/NuGet/NuGet.Config"
@@ -39,10 +39,6 @@
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[2.11.0, )"
-            },
-            "Swashbuckle.AspNetCore": {
-              "target": "Package",
-              "version": "[5.6.2, )"
             }
           },
           "imports": [

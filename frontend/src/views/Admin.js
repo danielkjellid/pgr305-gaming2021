@@ -17,6 +17,7 @@ import InstanceDeleteModal from '../components/InstanceDeleteModal'
 import InstanceAddModal from '../components/InstanceAddModal'
 import InstanceEditModal from '../components/InstanceEditModal'
 import { useAsyncStateContext } from '../context/AsyncStateContext'
+import axios from 'axios'
 
 const Admin = () => {
   // data for the time being
@@ -148,12 +149,31 @@ const Admin = () => {
     if (tabKey === 'games') {
       // handle new games 
       dummyGames.push(item)
+      gameState.service(item, 'POST').then(res => console.log(res))
     } else if (tabKey === 'characters') {
       // handle new characters
       dummyCharacters.push(item)
     }
 
     setShowAddModal(false)
+  }
+
+
+  // to be removed
+  const handleImageUpload = () => {
+    let file = document.getElementById('upload-img')
+    let data = new FormData()
+
+    data.append('file', file.files[0])
+
+    console.log(data)
+
+    axios({
+      method: 'post',
+      url: 'https://localhost:5001/games/savepicture',
+      data: data,
+      config: {headers: {'Content-Type': 'multipart/form-data'}}
+    })
   }
  
   return (
@@ -198,49 +218,54 @@ const Admin = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {gameState.data.filter(game => game.title.includes(gamesQuery)).map((data) => (
-                    <tr key={data.id}>
-                      <td>
-                        <OverlayTrigger
-                          key={data.id}
-                          placement="top"
-                          overlay={
-                            <Tooltip id={`tooltip-image-${data.id}`}>
-                              <Image
-                                className="product-image-tooltip"
-                                src={data.image}
-                                rounded
-                              />
-                            </Tooltip>
-                          }
-                        >
-                          <Image
-                            className='product-image'
-                            src={data.image}
-                            rounded
-                          />
-                        </OverlayTrigger>
-                      </td>
-                      <td>{data.title}</td>
-                      <td>{data.genre}</td>
-                      <td>{data.price}</td>
-                      <td>{data.console}</td>
-                      <td>
-                        <ButtonGroup>
-                          <Button variant="secondary" onClick={() => handleEditModalShow(data.id)}>
-                            <svg className="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                            </svg>
-                          </Button>
-                          <Button variant="danger" onClick={() => handleDeleteModalShow(data.id)}>
-                            <svg className="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                            </svg>
-                          </Button>
-                        </ButtonGroup>
-                      </td>
+                  {gameState.isFetching === true 
+                    ? <tr>
+                      <td>Loading...</td>
                     </tr>
-                  ))}
+                    : gameState.data?.filter(game => game.title.includes(gamesQuery)).map((data) => (
+                      <tr key={data.id}>
+                        <td>
+                          <OverlayTrigger
+                            key={data.id}
+                            placement="top"
+                            overlay={
+                              <Tooltip id={`tooltip-image-${data.id}`}>
+                                <Image
+                                  className="product-image-tooltip"
+                                  src={data.image}
+                                  rounded
+                                />
+                              </Tooltip>
+                            }
+                          >
+                            <Image
+                              className='product-image'
+                              src={data.image}
+                              rounded
+                            />
+                          </OverlayTrigger>
+                        </td>
+                        <td>{data.title}</td>
+                        <td>{data.genre}</td>
+                        <td>{data.price}</td>
+                        <td>{data.console}</td>
+                        <td>
+                          <ButtonGroup>
+                            <Button variant="secondary" onClick={() => handleEditModalShow(data.id)}>
+                              <svg className="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                              </svg>
+                            </Button>
+                            <Button variant="danger" onClick={() => handleDeleteModalShow(data.id)}>
+                              <svg className="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                              </svg>
+                            </Button>
+                          </ButtonGroup>
+                        </td>
+                      </tr>
+                    ))
+                  } 
                 </tbody>
               </Table>
             </Tab>
@@ -263,7 +288,9 @@ const Admin = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {characterState.data.filter(character => character.name.includes(characterQuery)).map((data) => (
+                  {characterState.isFetching 
+                    ? <tr><td>Loading...</td></tr>
+                    : characterState.data?.filter(character => character.name.includes(characterQuery)).map((data) => (
                     <tr key={data.id}>
                       <td>
                         <OverlayTrigger
@@ -318,6 +345,8 @@ const Admin = () => {
               </Table>
             </Tab>
           </Tabs>
+          <input id="upload-img" type="file" name="file" />
+          <button onClick={handleImageUpload} type="button" value="Upload image">Upload image</button>
         </Container>
 
         <InstanceDeleteModal

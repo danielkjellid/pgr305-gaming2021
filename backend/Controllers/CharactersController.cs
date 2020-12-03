@@ -54,13 +54,11 @@ namespace backend.Controllers
         }
 
         [Route("[action]")]
-        protected void SavePicture(IFormFile file) {
-            string webrootPath = _hosting.WebRootPath;
-            string absolutePath = Path.Combine($"{webrootPath}/images/characters/{file.FileName}");
-
-            using(var fileStream = new FileStream(absolutePath, FileMode.Create)) 
-            {
-                file.CopyTo(fileStream);
+        public void UploadImage(IFormFile file){
+            string webRootPath = _hosting.WebRootPath;
+            string absolutePath = Path.Combine($"{webRootPath}/images/characters/{file.FileName}");
+            using(var fileStream = new FileStream( absolutePath, FileMode.Create )){
+                file.CopyTo( fileStream );
             }
         }
 
