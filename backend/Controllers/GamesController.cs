@@ -54,7 +54,7 @@ namespace backend.Controllers
         }
 
         [Route("[action]")]
-        public void SavePicture(IFormFile file) {
+        protected void SavePicture(IFormFile file) {
             string webrootPath = _hosting.WebRootPath;
             string absolutePath = Path.Combine($"{webrootPath}/images/games/{file.FileName}");
 
