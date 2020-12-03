@@ -7,10 +7,16 @@ const GameForm = (props) => {
   // base state
   const [checkFormValidated, setCheckFormValidated] = useState(false)
   const [gameTitle, setGameTitle] = useState('')
-  const [gameImage, setGameImage] = useState('')
+  const [gameImage, setGameImage] = useState('Upload game cover')
   const [gameGenre, setGameGenre] = useState('Fantasy')
   const [gamePrice, setGamePrice] = useState()
   const [gameConsole, setGameConsole] = useState('PlayStation 5')
+
+  const handleImageChange = () => {
+    const image = document.getElementById('id_game_file')
+
+    setGameImage(image.files[0].name)
+  }
 
   const handleImageUpload = () => {
     let file = document.getElementById('id_game_file')
@@ -46,16 +52,16 @@ const GameForm = (props) => {
       if (props.item !== undefined) {
 
         // only rerun handleImageUpload if there is a new image
-        if (gameImage !== '') {
+        if (gameImage !== 'Upload game cover') {
           handleImageUpload()
         }
 
         item = {
           id: props.item.id,
           title: gameTitle !== '' ? gameTitle : props.item.title,
-          image: gameImage !== '' ? `https://localhost:5001/images/games/${image.files[0].name}` : props.item.image,
+          image: gameImage !== 'Upload game cover' ? `https://localhost:5001/images/games/${image.files[0].name}` : props.item.image,
           genre: gameGenre !== '' ? gameGenre : props.item.category,
-          price: gamePrice !== '' ? parseInt(gamePrice) : props.item.price,
+          price: gamePrice !== undefined ? parseInt(gamePrice) : props.item.price,
           console: gameConsole !== '' ? gameConsole : props.item.console
         }
       } else {
@@ -98,9 +104,9 @@ const GameForm = (props) => {
         <Form.Label>Image</Form.Label>
         <Form.File
           required={props.item !== undefined ? false : true}
-          label={props.item !== undefined ? props.item.image : 'Upload game cover'} 
+          label={props.item !== undefined ? props.item.image : gameImage} 
           custom
-          onChange={e => setGameImage(e.target.value)}
+          onChange={() => handleImageChange()}
         />
         {props.item !== undefined 
           ? <Image 
@@ -122,8 +128,12 @@ const GameForm = (props) => {
           defaultValue={props.item !== undefined ? props.item.genre : gameGenre}
           onChange={e => setGameGenre(e.target.value)}
         >
-          <option value="Fantasy">Fantasy</option>
+          <option value="Action">Action</option>
           <option value="Sport">Sport</option>
+          <option value="Fantasy">Fantasy</option>
+          <option value="Adventure">Adventure</option>
+          <option value="Racing">Racing</option>
+          <option value="Horror">Horror</option>
         </Form.Control>
         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
       </Form.Group>
@@ -134,8 +144,8 @@ const GameForm = (props) => {
             required
             type="number" 
             placeholder="Price of the game, e.g. 599"
-            defaultValue={props.item !== undefined ? props.item.price : null}
-            onChange={e => setGamePrice(e.target.value)}
+            defaultValue={props.item !== undefined ? props.item.price : 0}
+            onChange={e => setGamePrice(parseInt(e.target.value))}
           />
           <InputGroup.Append>
               <InputGroup.Text id="inputGroupPrepend">kr</InputGroup.Text>

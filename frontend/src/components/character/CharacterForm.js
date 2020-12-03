@@ -5,10 +5,16 @@ import axios from 'axios'
 const CharacterForm = (props) => {
   const [checkFormValidated, setCheckFormValidated] = useState(false)
   const [characterName, setCharacterName] = useState('')
-  const [characterImage, setCharacterImage] = useState('')
+  const [characterImage, setCharacterImage] = useState('Upload character image')
   const [characterGender, setCharacterGender] = useState('Male')
   const [characterHomeWorld, setCharacterHomeWorld] = useState('')
   const [characterGames, setCharacterGames] = useState('')
+
+  const handleImageChange = () => {
+    const image = document.getElementById('id_character_file')
+
+    setCharacterImage(image.files[0].name)
+  }
 
   const handleImageUpload = () => {
     let file = document.getElementById('id_character_file')
@@ -53,14 +59,14 @@ const CharacterForm = (props) => {
       if (props.item !== undefined) {
 
         // only rerun handleImageUpload if there is a new image
-        if (characterImage !== '') {
+        if (characterImage !== 'Upload character image') {
           handleImageUpload()
         }
 
         item = {
           id: props.item.id,
           name: characterName !== '' ? characterName : props.item.name,
-          image: characterImage !== '' ? `https://localhost:5001/images/characters/${image.files[0].name}` : props.item.image,
+          image: characterImage !== 'Upload character image' ? `https://localhost:5001/images/characters/${image.files[0].name}` : props.item.image,
           gender: characterGender !== '' ? characterGender : props.item.gender,
           homeWorld: characterHomeWorld !== '' ? characterHomeWorld : props.item.homeWorld,
           gamesId: characterGames !== '' ? characterGames : props.item.gamesId,
@@ -105,9 +111,9 @@ const CharacterForm = (props) => {
         <Form.Label>Image</Form.Label>
         <Form.File
           required={props.item !== undefined ? false : true}
-          label={props.item !== undefined ? props.item.image : 'Upload character image'} 
+          label={props.item !== undefined ? props.item.image : characterImage} 
           custom
-          onChange={e => setCharacterImage(e.target.value)}
+          onChange={() => handleImageChange()}
         />
         {props.item !== undefined 
           ? <Image 
