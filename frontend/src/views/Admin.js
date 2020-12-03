@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { 
   Container, 
   Table, 
@@ -17,6 +17,8 @@ import InstanceDeleteModal from '../components/InstanceDeleteModal'
 import InstanceAddModal from '../components/InstanceAddModal'
 import InstanceEditModal from '../components/InstanceEditModal'
 import { useAsyncStateContext } from '../context/AsyncStateContext'
+import axios from 'axios'
+
 
 const Admin = () => {
   // data for the time being
@@ -59,6 +61,8 @@ const Admin = () => {
   ])
   const { gameState } = useAsyncStateContext()
   const { characterState } = useAsyncStateContext()
+
+  //const [games, setGames] = useState(gameState.data)
 
   // empty state to store item which is to be edited or deleted
   const [clickedItem, setClickedItem] = useState({})
@@ -117,18 +121,17 @@ const Admin = () => {
     let clickedItem = null
 
     if (key === 'games') {
-      clickedItem = dummyGames.filter(instance => instance.id === id)
+      clickedItem = gameState.data?.filter(instance => instance.id === id)
     } else if (key === 'characters') {
       clickedItem = dummyCharacters.filter(instance => instance.id === id)
     }
-
+    console.log(clickedItem)
     // set states
     setClickedItem(clickedItem[0])
     setShowDeleteModal(true)
   }
 
   const handleDeleteInstance = () => {
-
     if (key === 'games') {
       findAndSplice(dummyGames)
     } else if (key === 'characters') {
@@ -147,10 +150,18 @@ const Admin = () => {
   const handleAddInstance = (tabKey, item) => {
     if (tabKey === 'games') {
       // handle new games 
-      dummyGames.push(item)
+      axios.post('https://localhost:5001/games', item).then(
+        setTimeout(() => {
+          gameState.service()
+        }, 1500)
+      )
     } else if (tabKey === 'characters') {
       // handle new characters
-      dummyCharacters.push(item)
+      axios.post('https://localhost:5001/characters', item).then(
+        setTimeout(() => {
+          characterState.service()
+        }, 1500)
+      )
     }
 
     setShowAddModal(false)
@@ -183,7 +194,7 @@ const Admin = () => {
               <Form className="mt-4">
                 <Form.Group>
                   <Form.Label>Search</Form.Label>
-                  <Form.Control type="text" placeholder="Search for games" onChange={e => setGamesQuery(e.target.value)} />
+                  <Form.Control type="text" placeholder="Search for games" onChange={e => setGamesQuery(e.target.value.toLowerCase())} />
                 </Form.Group>
               </Form>
               <Table responsive striped bordered>
@@ -198,49 +209,51 @@ const Admin = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {gameState.data.filter(game => game.title.includes(gamesQuery)).map((data) => (
-                    <tr key={data.id}>
-                      <td>
-                        <OverlayTrigger
-                          key={data.id}
-                          placement="top"
-                          overlay={
-                            <Tooltip id={`tooltip-image-${data.id}`}>
-                              <Image
-                                className="product-image-tooltip"
-                                src={data.image}
-                                rounded
-                              />
-                            </Tooltip>
-                          }
-                        >
-                          <Image
-                            className='product-image'
-                            src={data.image}
-                            rounded
-                          />
-                        </OverlayTrigger>
-                      </td>
-                      <td>{data.title}</td>
-                      <td>{data.genre}</td>
-                      <td>{data.price}</td>
-                      <td>{data.console}</td>
-                      <td>
-                        <ButtonGroup>
-                          <Button variant="secondary" onClick={() => handleEditModalShow(data.id)}>
-                            <svg className="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                            </svg>
-                          </Button>
-                          <Button variant="danger" onClick={() => handleDeleteModalShow(data.id)}>
-                            <svg className="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                            </svg>
-                          </Button>
-                        </ButtonGroup>
-                      </td>
-                    </tr>
-                  ))}
+                  {gameState.isFetching 
+                    ? <tr><td colSpan="6">Loading...</td></tr>
+                    : gameState.data?.filter(game => game.title.toLowerCase().includes(gamesQuery)).map((data) => (
+                      <tr key={data.id}>
+                        <td>
+                          <OverlayTrigger
+                            key={data.id}
+                            placement="top"
+                            overlay={
+                              <Tooltip id={`tooltip-image-${data.id}`}>
+                                <Image
+                                  className="product-image-tooltip"
+                                  src={data.image}
+                                  rounded
+                                />
+                              </Tooltip>
+                            }
+                          >
+                            <Image
+                              className='product-image'
+                              src={data.image}
+                              rounded
+                            />
+                          </OverlayTrigger>
+                        </td>
+                        <td>{data.title}</td>
+                        <td>{data.genre}</td>
+                        <td>{data.price}</td>
+                        <td>{data.console}</td>
+                        <td>
+                          <ButtonGroup>
+                            <Button variant="secondary" onClick={() => handleEditModalShow(data.id)}>
+                              <svg className="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                              </svg>
+                            </Button>
+                            <Button variant="danger" onClick={() => handleDeleteModalShow(data.id)}>
+                              <svg className="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                              </svg>
+                            </Button>
+                          </ButtonGroup>
+                        </td>
+                      </tr>
+                    ))} 
                 </tbody>
               </Table>
             </Tab>
@@ -248,7 +261,7 @@ const Admin = () => {
               <Form className="mt-4">
                 <Form.Group>
                   <Form.Label>Search</Form.Label>
-                  <Form.Control type="text" placeholder="Search for characters" onChange={e => setCharacterQuery(e.target.value)} />
+                  <Form.Control type="text" placeholder="Search for characters" onChange={e => setCharacterQuery(e.target.value.toLowerCase())} />
                 </Form.Group>
               </Form>
               <Table responsive striped bordered>
@@ -263,7 +276,9 @@ const Admin = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {characterState.data.filter(character => character.name.includes(characterQuery)).map((data) => (
+                  {characterState?.isFetching 
+                    ? <tr><td colSpan="6">Loading...</td></tr>
+                    : characterState.data?.filter(character => character.name.toLowerCase().includes(characterQuery)).map((data) => (
                     <tr key={data.id}>
                       <td>
                         <OverlayTrigger

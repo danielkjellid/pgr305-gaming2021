@@ -9,7 +9,7 @@ const GameForm = (props) => {
   const [gameTitle, setGameTitle] = useState('')
   const [gameImage, setGameImage] = useState('')
   const [gameGenre, setGameGenre] = useState('Fantasy')
-  const [gamePrice, setGamePrice] = useState('')
+  const [gamePrice, setGamePrice] = useState()
   const [gameConsole, setGameConsole] = useState('PlayStation 5')
 
   const handleImageUpload = () => {
@@ -18,19 +18,13 @@ const GameForm = (props) => {
 
     data.append('file', file.files[0])
 
-    console.log(data)
-
-    axios({
-      method: 'post',
-      url: 'https://localhost:5001/games/savepicture',
-      data: data,
-      config: {headers: {'Content-Type': 'multipart/form-data'}}
-    })
+    axios.post('https://localhost:5001/games/uploadimage', data, {headers: {'Content-Type': 'multipart/form-data'}})
   }
 
   // handler for adding a game instance
   const handleSubmit = (event) => {
     const form = event.currentTarget
+    const image = document.getElementById('id_game_file')
 
     // check if form is invalid
     if (form.checkValidity() === false) {
@@ -46,6 +40,8 @@ const GameForm = (props) => {
       event.stopPropagation()
       setCheckFormValidated(true)
 
+      handleImageUpload()
+
       // create a new object with new data
       let item = {}
 
@@ -60,16 +56,13 @@ const GameForm = (props) => {
         }
       } else {
         item = {
-          id: 999, // temporary ID, to be removed
           title: gameTitle,
-          image: gameImage,
+          image: `https://localhost:5001/images/games/${image.files[0].name}`,
           genre: gameGenre,
-          price: gamePrice,
+          price: parseInt(gamePrice),
           console: gameConsole
         }
       }
-
-      handleImageUpload()
 
       // send item object to parent
       props.submit(item)
