@@ -3,7 +3,7 @@ import { Form } from 'react-bootstrap'
 
 const SearchBar = ({ onChange, placeholder }) => {
   return (
-    <Form className='mb-5'>
+    <Form className='mb-4 mt-4'>
       <Form.Group>
         <Form.Label>Search</Form.Label>
         <Form.Control
