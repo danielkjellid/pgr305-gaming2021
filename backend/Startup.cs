@@ -65,6 +65,8 @@ namespace backend
 
             app.UseStaticFiles();
 
+            app.UseDirectoryBrowser();
+
             // enable cors policy defined in ConfigureServices
             app.UseCors("AllowAnyOrigin");
 

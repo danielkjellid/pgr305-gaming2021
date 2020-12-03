@@ -6,11 +6,15 @@ const useAsyncState = (url) => {
   const [data, setData] = useState()
   const [error, setError] = useState()
 
-  const service = async (body = undefined, method = 'GET') => {
+  const service = async (data = undefined, method = 'GET') => {
     setIsFetching(true)
 
     try {
-      const res = await axios({ url, method, body })
+      const res = await axios({ url, method, data, config: {headers: {
+          'Accept': 'application/json', 
+          'Content-Type': 'application/json'
+        }} 
+      })
       setData(res.data)
       setIsFetching(false)
     } catch (error) {
