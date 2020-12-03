@@ -316,18 +316,6 @@ const Admin = () => {
                   setCharacterQuery(e.target.value.toLowerCase())
                 }
               />
-              {/* <Form className='mt-4'>
-                <Form.Group>
-                  <Form.Label>Search</Form.Label>
-                  <Form.Control
-                    type='text'
-                    placeholder='Search for characters'
-                    onChange={(e) =>
-                      setCharacterQuery(e.target.value.toLowerCase())
-                    }
-                  />
-                </Form.Group>
-              </Form> */}
               <Table responsive striped bordered>
                 <thead>
                   <tr>

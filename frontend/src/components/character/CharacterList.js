@@ -18,11 +18,6 @@ const CharacterList = ({ preview, url, query }) => {
           <CharacterItem key={character.id} character={character} url={url} />
         ))
     : null
-  /*  return characters
-    ? characters.map((character) => (
-        <CharacterItem key={character.id} character={character} url={url} />
-      ))
-    : null */
 }
 
 export default CharacterList

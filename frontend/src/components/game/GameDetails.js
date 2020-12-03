@@ -1,9 +1,14 @@
 import React from 'react'
 import { useParams, Link } from 'react-router-dom'
+import CharacterItem from '../../components/character/CharacterItem'
+import { useAsyncStateContext } from '../../context/AsyncStateContext'
+import { Row, Col } from 'react-bootstrap'
 
 const GameDetails = ({ data }) => {
+  const { characterState } = useAsyncStateContext()
   const { gameId } = useParams()
   const game = data?.find((g) => g.id === String(gameId))
+
   let gameData
 
   if (game) {
@@ -14,19 +19,31 @@ const GameDetails = ({ data }) => {
         </div>
         <div className='game-details'>
           <div>
-            <img src={game.image} alt='' />
+            <img 
+              className="game-image"
+              src={game.image} 
+              alt='' 
+            />
           </div>
           <div className='game-details-desc'>
             <h2> {game.title} </h2>
             <p>
-              <span className='desc-gray'> Genre: </span> {game.genre}
+              <span className='desc-gray'>Genre: </span> {game.genre}
             </p>
             <p>
-              <span className='desc-gray'> Price: </span> {game.price},-
+              <span className='desc-gray'>Price: </span> {game.price},-
             </p>
             <p>
-              <span className='desc-gray'> Console: </span> {game.console}
+              <span className='desc-gray'>Console: </span> {game.console}
             </p>
+            <p>
+              <span className='desc-gray'>Characters: </span>
+            </p>
+            <Row>
+              {characterState.data?.filter(
+                character => character.gamesId.includes(gameId)).map(
+                  char => <Col><CharacterItem key={char.id} character={char} url={'/characters'} /></Col>)}
+            </Row>
           </div>
         </div>
       </>

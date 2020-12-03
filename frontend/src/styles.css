@@ -131,7 +131,9 @@ body {
 }
 
 .character-card img {
-  border-radius: 50%;
+  width: 150px;
+  height: 200px;
+  background-color: #f9fafb;
 }
 
 .section-heading {
@@ -164,6 +166,11 @@ body {
   margin-top: 80px;
 }
 
+.game-image {
+  width: 250px;
+  height: 300px;
+}
+
 .game-details-desc {
   margin-left: 40px;
   color: #4a5568;
@@ -178,10 +185,6 @@ body {
 
 .game-details-desc p {
   font-weight: 600;
-}
-
-.game-details img {
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .desc-gray {
@@ -200,7 +203,8 @@ body {
 }
 
 .character-image {
-  border-radius: 50%;
+  width: 200px;
+  height: 300px;
 }
 
 .character-details-desc {
