@@ -95,9 +95,9 @@ const Admin = () => {
 
      // populate clickedItem variable
     if (key === 'games') {
-      clickedItem = dummyGames.filter((instance) => instance.id === id)
+      clickedItem = gameState.data?.filter((instance) => instance.id === id)
     } else if (key === 'characters') {
-      clickedItem = dummyCharacters.filter((instance) => instance.id === id)
+      clickedItem = characterState.data?.filter((instance) => instance.id === id)
     }
 
     // set states
@@ -107,7 +107,12 @@ const Admin = () => {
 
   const handleEditInstance = (key, item) => {
     if (key === 'games') {
-      findAndReplace(dummyGames, item)
+      axios.put(gameUrl + clickedItem.id, item)
+        .then(
+          setTimeout(() => {
+            gameState.service()
+          }, 1000)
+        )
     } else if (key === 'characters') {
       findAndReplace(dummyCharacters, item)
     }
@@ -124,7 +129,7 @@ const Admin = () => {
     if (key === 'games') {
       clickedItem = gameState.data?.filter(instance => instance.id === id)
     } else if (key === 'characters') {
-      clickedItem = dummyCharacters.filter(instance => instance.id === id)
+      clickedItem = characterState.data?.filter(instance => instance.id === id)
     }
 
     // set states

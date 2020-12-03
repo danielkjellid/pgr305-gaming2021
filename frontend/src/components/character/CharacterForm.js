@@ -48,20 +48,26 @@ const CharacterForm = (props) => {
       event.stopPropagation()
       setCheckFormValidated(true)
 
-      handleImageUpload()
-
       let item = {}
 
       if (props.item !== undefined) {
+
+        // only rerun handleImageUpload if there is a new image
+        if (characterImage !== '') {
+          handleImageUpload()
+        }
+
         item = {
           id: props.item.id,
           name: characterName !== '' ? characterName : props.item.name,
-          image: characterImage !== '' ? characterImage : props.item.image,
+          image: characterImage !== '' ? `https://localhost:5001/images/characters/${image.files[0].name}` : props.item.image,
           gender: characterGender !== '' ? characterGender : props.item.gender,
           homeWorld: characterHomeWorld !== '' ? characterHomeWorld : props.item.homeWorld,
           gamesId: characterGames !== '' ? characterGames : props.item.gamesId,
         }
       } else {
+        handleImageUpload()
+
         item = {
           name: characterName,
           image: `https://localhost:5001/images/characters/${image.files[0].name}`,

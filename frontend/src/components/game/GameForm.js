@@ -40,21 +40,27 @@ const GameForm = (props) => {
       event.stopPropagation()
       setCheckFormValidated(true)
 
-      handleImageUpload()
-
       // create a new object with new data
       let item = {}
 
       if (props.item !== undefined) {
+
+        // only rerun handleImageUpload if there is a new image
+        if (gameImage !== '') {
+          handleImageUpload()
+        }
+
         item = {
           id: props.item.id,
           title: gameTitle !== '' ? gameTitle : props.item.title,
-          image: gameImage !== '' ? gameImage : props.item.image,
+          image: gameImage !== '' ? `https://localhost:5001/images/games/${image.files[0].name}` : props.item.image,
           genre: gameGenre !== '' ? gameGenre : props.item.category,
-          price: gamePrice !== '' ? gamePrice : props.item.price,
+          price: gamePrice !== '' ? parseInt(gamePrice) : props.item.price,
           console: gameConsole !== '' ? gameConsole : props.item.console
         }
       } else {
+        handleImageUpload()
+
         item = {
           title: gameTitle,
           image: `https://localhost:5001/images/games/${image.files[0].name}`,
