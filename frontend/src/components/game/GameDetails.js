@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 
 const GameDetails = ({ data }) => {
   const { gameId } = useParams()
-  const game = data.find((g) => g.id === Number(gameId))
+  const game = data?.find((g) => g.id === String(gameId))
   let gameData
 
   if (game) {
@@ -14,22 +14,19 @@ const GameDetails = ({ data }) => {
         </div>
         <div className='game-details'>
           <div>
-            <img src='https://source.unsplash.com/random/300x400' alt='' />
+            <img src={game.image} alt='' />
           </div>
           <div className='game-details-desc'>
             <h2> {game.title} </h2>
             <p>
-              <span className='desc-gray'> Genre: </span> Fantasy
+              <span className='desc-gray'> Genre: </span> {game.genre}
             </p>
             <p>
-              <span className='desc-gray'> Price: </span> 599,-
+              <span className='desc-gray'> Price: </span> {game.price},-
             </p>
             <p>
-              <span className='desc-gray'> Console: </span> PS5 & Xbox
+              <span className='desc-gray'> Console: </span> {game.console}
             </p>
-            <div className='characters-in-game'>
-              <h3>Characters</h3>
-            </div>
           </div>
         </div>
       </>

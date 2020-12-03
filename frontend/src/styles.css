@@ -199,7 +199,7 @@ body {
   margin-top: 80px;
 }
 
-.character-details img {
+.character-image {
   border-radius: 50%;
 }
 
@@ -217,6 +217,10 @@ body {
 
 .character-details-desc p {
   font-weight: 600;
+}
+
+.character-gamelist {
+  display: flex;
 }
 
 .game-hero {
@@ -288,6 +292,20 @@ body {
   .hero-p {
     font-size: 16px;
   }
+  .game-details {
+    flex-direction: column;
+  }
+  .game-details-desc {
+    margin-left: 0;
+    margin-top: 20px;
+  }
+  .character-details {
+    flex-direction: column;
+  }
+  .character-details-desc {
+    margin-left: 0;
+    margin-top: 20px;
+  }
 }
 
 /* Small screens */
@@ -300,6 +318,18 @@ body {
   }
   #dropdown-menu {
     display: block;
+  }
+  .character-details {
+    align-items: center;
+  }
+  .game-details {
+    align-items: center;
+  }
+  .game-hero h2 {
+    font-size: 48px;
+  }
+  .character-hero h2 {
+    font-size: 48px;
   }
 }
 

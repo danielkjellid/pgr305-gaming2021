@@ -1,10 +1,13 @@
 import React from 'react'
 import { useParams, Link } from 'react-router-dom'
+import { useAsyncStateContext } from '../../context/AsyncStateContext'
 
 const CharacterDetails = ({ data }) => {
+  const { gameState } = useAsyncStateContext()
   const { characterId } = useParams()
-  const character = data.find((c) => c.id === Number(characterId))
+  const character = data?.find((c) => c.id === String(characterId))
   let characterData
+  console.log(character?.gamesId)
 
   if (character) {
     characterData = (
@@ -13,17 +16,41 @@ const CharacterDetails = ({ data }) => {
           <Link to='/characters'>Back to characters</Link>
         </div>
         <div className='character-details'>
-          <img src='https://source.unsplash.com/random/300x300' alt='' />
+          <img
+            className='character-image'
+            src={character.image}
+            alt='Character portrait'
+          />
           <div className='character-details-desc'>
-            <h2> {character.title} </h2>
+            <h2> {character.name} </h2>
             <p>
-              <span className='desc-gray'> Gender: </span> Male
+              <span className='desc-gray'> Gender: </span> {character.gender}
             </p>
             <p>
-              <span className='desc-gray'> Homeworld: </span> Azeroth
+              <span className='desc-gray'> Homeworld: </span>
+              {character.homeWorld}
             </p>
             <div className='games-including-character'>
-              <h3>Games</h3>
+              <h5>Appears in:</h5>
+              <div className='character-gamelist'>
+                {character?.gamesId.map((id) =>
+                  gameState.data
+                    ?.filter((game) => game.id === id)
+                    .map((filteredGame) => (
+                      <Link to={`/games/${filteredGame.id}`}>
+                        <img
+                          alt='Game cover'
+                          key={filteredGame.id}
+                          src={filteredGame.image}
+                          style={{
+                            width: '150px',
+                            marginRight: '10px',
+                          }}
+                        ></img>
+                      </Link>
+                    ))
+                )}
+              </div>
             </div>
           </div>
         </div>
