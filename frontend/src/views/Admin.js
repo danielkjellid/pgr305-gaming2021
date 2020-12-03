@@ -23,6 +23,7 @@ import axios from 'axios'
 const Admin = () => {
 
   const gameUrl = 'https://localhost:5001/games/'
+  const characterUrl = 'https://localhost:5001/characters/'
 
   // data for the time being
   const [dummyGames] = useState([
@@ -64,8 +65,6 @@ const Admin = () => {
   ])
   const { gameState } = useAsyncStateContext()
   const { characterState } = useAsyncStateContext()
-
-  //const [games, setGames] = useState(gameState.data)
 
   // empty state to store item which is to be edited or deleted
   const [clickedItem, setClickedItem] = useState({})
@@ -145,7 +144,6 @@ const Admin = () => {
       findAndSplice(dummyCharacters)
     }
 
-    // TODO: handle delete at api endpoint
     setShowDeleteModal(false)
   }
 
@@ -165,7 +163,7 @@ const Admin = () => {
         )
     } else if (tabKey === 'characters') {
       // handle new characters
-      axios.post('https://localhost:5001/characters', item)
+      axios.post(characterUrl, item)
         .then(setTimeout(() => {
           characterState.service()
         }, 1000)
@@ -315,7 +313,7 @@ const Admin = () => {
                       <td>
                         <ul>
                         {data.gamesId.map(id => (
-                          dummyGames.filter(game => game.id === parseInt(id)).map(filteredGame => (
+                          gameState.data?.filter(game => game.id === id).map(filteredGame => (
                             <li key={filteredGame.id}>{filteredGame.title}</li>
                           ))
                         ))}
@@ -355,7 +353,7 @@ const Admin = () => {
           onHide={handleAddModalClose}
           tab={key}
           submitAdd={handleAddInstance}
-          games={dummyGames}
+          games={gameState.data}
         />
         
         <InstanceEditModal
@@ -364,7 +362,7 @@ const Admin = () => {
           tab={key}
           item={clickedItem}
           submitEdit={handleEditInstance}
-          games={dummyGames}
+          games={gameState.data}
         />
       </div>
     </div>

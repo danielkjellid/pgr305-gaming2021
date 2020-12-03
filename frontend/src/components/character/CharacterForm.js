@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Form, Image } from 'react-bootstrap'
+import axios from 'axios'
 
 const CharacterForm = (props) => {
   const [checkFormValidated, setCheckFormValidated] = useState(false)
@@ -8,6 +9,15 @@ const CharacterForm = (props) => {
   const [characterGender, setCharacterGender] = useState('Male')
   const [characterHomeWorld, setCharacterHomeWorld] = useState('')
   const [characterGames, setCharacterGames] = useState('')
+
+  const handleImageUpload = () => {
+    let file = document.getElementById('id_character_file')
+    let data = new FormData()
+
+    data.append('file', file.files[0])
+
+    axios.post('https://localhost:5001/characters/uploadimage', data, {headers: {'Content-Type': 'multipart/form-data'}})
+  }
 
   const handleMultipleGamesSelect = (event) => {
     const selected = []
@@ -22,6 +32,7 @@ const CharacterForm = (props) => {
 
   const handleSubmit = (event) => {
     const form = event.currentTarget
+    const image = document.getElementById('id_character_file')
 
     // check if form is invalid
     if (form.checkValidity() === false) {
@@ -37,6 +48,8 @@ const CharacterForm = (props) => {
       event.stopPropagation()
       setCheckFormValidated(true)
 
+      handleImageUpload()
+
       let item = {}
 
       if (props.item !== undefined) {
@@ -50,9 +63,8 @@ const CharacterForm = (props) => {
         }
       } else {
         item = {
-          id: 999, // temporary ID, to be removed
           name: characterName,
-          image: characterImage,
+          image: `https://localhost:5001/images/characters/${image.files[0].name}`,
           gender: characterGender,
           homeWorld: characterHomeWorld,
           gamesId: characterGames
