@@ -26,7 +26,28 @@ namespace backend.Services
 
         public Character Get(string id)
         {
+            // get single character instance based on id
             return _characters.Find(character => character.Id == id).SingleOrDefault();
+        }
+
+        public Character Create(Character character)
+        {
+            // create a new character instance, and return created instance
+            _characters.InsertOne(character);
+            return character;
+        }
+
+        public void Update(string id, Character characterIn)
+        {
+            // replace instance with id with characterIn (new instance)
+            _characters.ReplaceOne(character => character.Id == id, characterIn);
+
+        }
+
+        public void Remove(string id)
+        {
+            // delete instance based on id
+            _characters.DeleteOne(character => character.Id == id);
         }
 
     }
