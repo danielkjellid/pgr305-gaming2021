@@ -12,6 +12,7 @@ const GameList = ({ preview, url, query }) => {
         <GameItem key={game.id} game={game} url={url} query={query} />
       ))
     : null */
+
   return games
     ? games
         .filter((game) =>

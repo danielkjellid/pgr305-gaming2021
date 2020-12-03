@@ -1,7 +1,6 @@
 import React from 'react'
 import CharacterItem from './CharacterItem'
 import { useAsyncStateContext } from '../../context/AsyncStateContext'
-import { Link } from 'react-router-dom'
 
 const CharacterList = ({ preview, url, query }) => {
   const { characterState } = useAsyncStateContext()

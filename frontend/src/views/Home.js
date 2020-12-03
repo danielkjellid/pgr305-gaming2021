@@ -16,7 +16,7 @@ const Home = () => {
           link='/games'
         />
         <Row xs={1} md={2} lg={3}>
-          <GameList preview={true} url='/games' />
+          <GameList preview={true} url='/games' query='' />
         </Row>
         <HeadingNavigation
           headingText='Popular characters'
@@ -24,7 +24,7 @@ const Home = () => {
           link='/characters'
         />
         <Row xs={1} md={2} lg={3}>
-          <CharacterList preview={true} url='/characters' />
+          <CharacterList preview={true} url='/characters' query='' />
         </Row>
       </Container>
     </div>
