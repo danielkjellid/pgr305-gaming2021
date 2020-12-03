@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { 
   Container, 
   Table, 
@@ -21,6 +21,9 @@ import axios from 'axios'
 
 
 const Admin = () => {
+
+  const gameUrl = 'https://localhost:5001/games/'
+
   // data for the time being
   const [dummyGames] = useState([
     {
@@ -117,7 +120,6 @@ const Admin = () => {
   const handleDeleteModalClose = () => setShowDeleteModal(false)
   const handleDeleteModalShow = (id) => {
     //save clickedItem in variable
-
     let clickedItem = null
 
     if (key === 'games') {
@@ -125,7 +127,7 @@ const Admin = () => {
     } else if (key === 'characters') {
       clickedItem = dummyCharacters.filter(instance => instance.id === id)
     }
-    console.log(clickedItem)
+
     // set states
     setClickedItem(clickedItem[0])
     setShowDeleteModal(true)
@@ -133,7 +135,12 @@ const Admin = () => {
 
   const handleDeleteInstance = () => {
     if (key === 'games') {
-      findAndSplice(dummyGames)
+      axios.delete(gameUrl + clickedItem.id)
+        .then(
+          setTimeout(() => {
+            gameState.service()
+          }, 1000)
+        )
     } else if (key === 'characters') {
       findAndSplice(dummyCharacters)
     }
@@ -150,17 +157,18 @@ const Admin = () => {
   const handleAddInstance = (tabKey, item) => {
     if (tabKey === 'games') {
       // handle new games 
-      axios.post('https://localhost:5001/games', item).then(
-        setTimeout(() => {
-          gameState.service()
-        }, 1500)
-      )
+      axios.post(gameUrl, item)
+        .then(
+          setTimeout(() => {
+            gameState.service()
+          }, 1000)
+        )
     } else if (tabKey === 'characters') {
       // handle new characters
-      axios.post('https://localhost:5001/characters', item).then(
-        setTimeout(() => {
+      axios.post('https://localhost:5001/characters', item)
+        .then(setTimeout(() => {
           characterState.service()
-        }, 1500)
+        }, 1000)
       )
     }
 
