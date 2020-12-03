@@ -122,6 +122,10 @@ body {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.no-hover:hover {
+  box-shadow: none !important;
+}
+
 .character-card {
   text-align: center;
 }
@@ -133,7 +137,7 @@ body {
 .character-card img {
   width: 150px;
   height: 200px;
-  background-color: #f9fafb;
+  background-color:transparent;
 }
 
 .section-heading {
@@ -163,7 +167,8 @@ body {
 
 .game-details {
   display: flex;
-  margin-top: 80px;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 .game-image {
@@ -199,7 +204,8 @@ body {
 .character-details {
   display: flex;
   align-items: center;
-  margin-top: 80px;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 .character-image {
