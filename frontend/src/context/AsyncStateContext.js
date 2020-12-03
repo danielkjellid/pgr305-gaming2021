@@ -16,10 +16,10 @@ export const useAsyncStateContext = () => {
 
 const AsyncStateProvider = ({ children }) => {
   const characterState = useAsyncState(
-    'https://jsonplaceholder.typicode.com/todos'
+    'https://localhost:5001/characters'
   )
 
-  const gameState = useAsyncState('https://jsonplaceholder.typicode.com/todos')
+  const gameState = useAsyncState('https://localhost:5001/games')
   //const reviegawsState = customHook
 
   return (
