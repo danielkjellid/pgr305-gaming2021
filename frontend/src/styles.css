@@ -227,8 +227,8 @@ body {
   display: flex;
 }
 
-.game-hero {
-  background-image: url(./assets/games.jpg);
+.hero {
+  position: relative;
   width: 100vw;
   height: 500px;
   background-position: left;
@@ -237,33 +237,19 @@ body {
   display: flex;
   align-items: center;
   margin-bottom: 50px;
+  text-align: center;
 }
 
-.game-hero h2 {
-  font-size: 72px;
-  font-weight: 700;
-  font-family: Montserrat, 'sans-serif';
-  color: #fafaf9;
-  background-color: rgba(0, 123, 255, 0.9);
-  padding: 2rem;
-  border-radius: 4px;
-  text-align: center;
+.game-hero {
+  background-image: url(./assets/games.jpg);
 }
 
 .character-hero {
   background-image: url(./assets/super-smash.png);
-  width: 100vw;
-  height: 500px;
-  background-position: left;
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  margin-bottom: 50px;
-  text-align: center;
 }
 
-.character-hero h2 {
+.hero h2 {
+  position: relative;
   font-size: 72px;
   font-weight: 700;
   font-family: Montserrat, 'sans-serif';
@@ -271,6 +257,18 @@ body {
   background-color: rgba(0, 123, 255, 0.9);
   padding: 2rem;
   border-radius: 4px;
+  z-index: 20;
+}
+
+.hero-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: black;
+  opacity: 0.4;
+  z-index: 10;
 }
 
 .footer {
