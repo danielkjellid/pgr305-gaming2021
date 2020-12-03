@@ -76,16 +76,6 @@ const Admin = () => {
   // state controlling tabs
   const [key, setKey] = useState('games')
 
-  const findAndSplice = (arr) => {
-    const itemIndex = arr.findIndex(item => item.id === clickedItem.id)
-    return arr.splice(itemIndex, 1)
-  }
-
-  const findAndReplace = (arr, obj) => {
-    const itemIndex = arr.findIndex(item => item.id === clickedItem.id)
-    return arr.splice(itemIndex, 1, obj)
-  }
-
   const [showEditModal, setShowEditModal] = useState(false)
   const handleEditModalClose = () => setShowEditModal(false)
   const handleEditModalShow = (id) => {
@@ -114,7 +104,12 @@ const Admin = () => {
           }, 1000)
         )
     } else if (key === 'characters') {
-      findAndReplace(dummyCharacters, item)
+      axios.put(characterUrl + clickedItem.id, item)
+        .then(
+          setTimeout(() => {
+            characterState.service()
+          }, 1000)
+        )
     }
     setShowEditModal(false)
   }
@@ -146,7 +141,12 @@ const Admin = () => {
           }, 1000)
         )
     } else if (key === 'characters') {
-      findAndSplice(dummyCharacters)
+      axios.delete(characterUrl + clickedItem.id)
+        .then(
+          setTimeout(() => {
+            characterState.service()
+          }, 1000)
+        )
     }
 
     setShowDeleteModal(false)
