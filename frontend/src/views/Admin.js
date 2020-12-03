@@ -16,6 +16,7 @@ import {
 import InstanceDeleteModal from '../components/InstanceDeleteModal'
 import InstanceAddModal from '../components/InstanceAddModal'
 import InstanceEditModal from '../components/InstanceEditModal'
+import { useAsyncStateContext } from '../context/AsyncStateContext'
 
 const Admin = () => {
   // data for the time being
@@ -56,6 +57,8 @@ const Admin = () => {
       gamesId: [1, 2]
     },
   ])
+  const { gameState } = useAsyncStateContext()
+  const { characterState } = useAsyncStateContext()
 
   // empty state to store item which is to be edited or deleted
   const [clickedItem, setClickedItem] = useState({})
@@ -195,7 +198,7 @@ const Admin = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {dummyGames.filter(game => game.title.includes(gamesQuery)).map((data) => (
+                  {gameState.data.filter(game => game.title.includes(gamesQuery)).map((data) => (
                     <tr key={data.id}>
                       <td>
                         <OverlayTrigger
@@ -260,7 +263,7 @@ const Admin = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {dummyCharacters.filter(character => character.name.includes(characterQuery)).map((data) => (
+                  {characterState.data.filter(character => character.name.includes(characterQuery)).map((data) => (
                     <tr key={data.id}>
                       <td>
                         <OverlayTrigger
