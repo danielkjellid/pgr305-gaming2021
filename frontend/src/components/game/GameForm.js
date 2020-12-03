@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 import { Form, InputGroup, Image } from 'react-bootstrap'
 
 const GameForm = (props) => {
@@ -10,6 +11,22 @@ const GameForm = (props) => {
   const [gameGenre, setGameGenre] = useState('Fantasy')
   const [gamePrice, setGamePrice] = useState('')
   const [gameConsole, setGameConsole] = useState('PlayStation 5')
+
+  const handleImageUpload = () => {
+    let file = document.getElementById('id_game_file')
+    let data = new FormData()
+
+    data.append('file', file.files[0])
+
+    console.log(data)
+
+    axios({
+      method: 'post',
+      url: 'https://localhost:5001/games/savepicture',
+      data: data,
+      config: {headers: {'Content-Type': 'multipart/form-data'}}
+    })
+  }
 
   // handler for adding a game instance
   const handleSubmit = (event) => {
@@ -51,6 +68,8 @@ const GameForm = (props) => {
           console: gameConsole
         }
       }
+
+      handleImageUpload()
 
       // send item object to parent
       props.submit(item)

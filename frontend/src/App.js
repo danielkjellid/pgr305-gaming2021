@@ -7,8 +7,10 @@ const App = () => {
   const { characterState } = useAsyncStateContext()
 
   useEffect(() => {
-    gameState.fetch()
-    characterState.fetch()
+    // get data through service
+    // provides get method by default
+    gameState.service()
+    characterState.service()
   }, [])
 
   return (

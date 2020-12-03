@@ -6,7 +6,7 @@ const useAsyncState = (url) => {
   const [data, setData] = useState()
   const [error, setError] = useState()
 
-  const fetch = async (body = undefined, method = 'GET') => {
+  const service = async (body = undefined, method = 'GET') => {
     setIsFetching(true)
 
     try {
@@ -23,7 +23,7 @@ const useAsyncState = (url) => {
     data,
     error,
     isFetching,
-    fetch,
+    service,
   }
 }
 
