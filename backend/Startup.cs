@@ -38,7 +38,8 @@ namespace backend
             services.AddSingleton<IBackendstoreDatabaseSettings>(
                 sp => sp.GetRequiredService<IOptions<BackendstoreDatabaseSettings>>().Value
             );
-
+            
+            services.AddSingleton<CharactersService>();
             services.AddSingleton<GamesService>();
         }
 
@@ -49,6 +50,8 @@ namespace backend
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseStaticFiles();
 
             app.UseHttpsRedirection();
 

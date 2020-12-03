@@ -26,7 +26,28 @@ namespace backend.Services
 
         public Game Get(string id)
         {
+            // get single game instance based on id
             return _games.Find(game => game.Id == id).SingleOrDefault();
+        }
+
+        public Game Create(Game game)
+        {
+            // create a new game instance, and return created instance
+            _games.InsertOne(game);
+            return game;
+        }
+
+        public void Update(string id, Game gameIn)
+        {
+            // replace instance with id with gameIn (new instance)
+            _games.ReplaceOne(game => game.Id == id, gameIn);
+            
+        }
+
+        public void Remove(string id)
+        {
+            // delete instance based on id
+            _games.DeleteOne(game => game.Id == id);
         }
 
     }

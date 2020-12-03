@@ -20,6 +20,6 @@ namespace backend.Models
         public string HomeWorld { get; set; }
         
         // games character are associated with
-        public double[] gamesId { get; set; } 
+        public string[] gamesId { get; set; } 
     }
 }
